@@ -1,15 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Input, Modal, Progress, Space, Table, Tag } from 'antd'
+import { Button, Cascader, Checkbox, Input, Modal, Progress, Space, Table, Tag } from 'antd'
 import { useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
-import { useState } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi';
+import React, { useState } from 'react';
+import {
 
+  DatePicker,
+  Form,
+  InputNumber,
+  Radio,
+  Select,
+  Switch,
+  TreeSelect,
+} from 'antd';
+type FieldType = {
+  username?: string;
+  password?: string;
+  remember?: string;
+  name:string
+};
 const ShoePolishBuyer = () => {
   const {email} = useAppSelector(state=>state.auth.user)
   const { data: allSaleData, isLoading } = useGetAllSaleQuery(undefined)
-  console.log(allSaleData?.data,88);
+  // console.log(allSaleData?.data,88);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
+
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const data = allSaleData?.data?.filter(item => item?.buyer?.email == email);
 
 
@@ -37,10 +58,19 @@ const ShoePolishBuyer = () => {
   //   }
   // })
   // `${status?"Your Polish Is Pending":"Send Polish Request"}`
+  const showModal = (saleId) => {
+    setIsModalOpen(true);
+    // console.log(saleId,77);
+  };
+  const handleOk = (saleId) => {
+    setIsModalOpen(false);
+    console.log(saleId);
+  };
 
-
-
-
+  const onFinishFormData = (values: any) => {
+    console.log('Success:', values);
+  };
+  
   const dataSource = data?.map(({_id,polishId, saleId,shoeId,status,
     quantitySold,seller
 ,     estimated_completion_time,saleDate
@@ -51,24 +81,62 @@ const ShoePolishBuyer = () => {
     quantity:quantitySold,
     sellerName: seller.name,
     saleDate:saleDate,
-    // polishRequest:status ?<Button color='green'>Polish Requested</Button>:<Button color='green'>Send Polish Request</Button>,
+    polishRequest:polishId ?<Button  color='green'>Polish in progress</Button>:<>
+    <Button className='bg-[#1677ff]' type="primary" onClick={showModal}>
+      Do Polish Request
+    </Button>
+    <Modal   okButtonProps={{ hidden: true }}
+        cancelButtonProps={{ hidden: true }} title="Basic Modal" open={isModalOpen} onOk={()=>handleOk(_id)} onCancel={handleCancel}>
+      {/*  */}
+      <Form
+    name="basic"
+    labelCol={{ span: 8 }}
+    wrapperCol={{ span: 16 }}
+    style={{ maxWidth: 600 }}
+    initialValues={{ remember: true }}
+    onFinish={onFinishFormData}
+    // onFinishFailed={onFinishFailed}
+    autoComplete="off"
+  >
+    <Form.Item<FieldType>
+      label="Username"
+      name="username"
+      rules={[{ required: true, message: 'Please input your username!' }]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item<FieldType>
+      label="Password"
+      name="password"
+      rules={[{ required: true, message: 'Please input your password!' }]}
+    >
+      <Input.Password />
+    </Form.Item>
+
+    <Form.Item<FieldType>
+      name="remember"
+      valuePropName="checked"
+      wrapperCol={{ offset: 8, span: 16 }}
+    >
+      {/* <Checkbox>Remember me</Checkbox> */}
+    </Form.Item>
+
+    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Button className='bg-[#1677ff]' onClick={handleCancel}  type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form.Item>
+  </Form>
+      {/*  */}
+    </Modal></>,
     polishStatus: `${polishId ? polishId.status : "No pending polish requests"}`,
     estimated_completion_time: `${polishId ? polishId.estimated_completion_time : "No pending polish requests"}`
   }));
 
 
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
 
 
@@ -102,16 +170,16 @@ const ShoePolishBuyer = () => {
     },
     {
       title: 'Polish Request',
-      // dataIndex: 'polishRequest',
-      key: 'polishRequestX',
-      render: (data) => {
-        console.log(data, 44);
-        return <>
-          <Button type="primary" onClick={showModal}>
-            Open Modal
-          </Button>
-        </>
-      }
+      dataIndex: 'polishRequest',
+      key: 'polishRequest',
+      // render: (data) => {
+      //   console.log(data, 44);
+      //   return <>
+      //     <Button type="primary" onClick={showModal}>
+      //       Open Modal
+      //     </Button>
+      //   </>
+      // }
     },
     {
       title: 'Polish Status',
@@ -170,9 +238,9 @@ const ShoePolishBuyer = () => {
         columns={columns}
         dataSource={dataSource}
       />
- <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+ {/* <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <input />
-          </Modal>
+          </Modal> */}
     </div>
   )
 }
