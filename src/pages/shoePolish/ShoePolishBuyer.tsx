@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Input, Modal, Progress, Space, Table, Tag } from 'antd'
 import { useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
-import { Form } from 'react-router-dom';
 import { useState } from 'react';
+import { useAppSelector } from '../../redux/hooks';
 
 const ShoePolishBuyer = () => {
+  const {email} = useAppSelector(state=>state.auth.user)
   const { data: allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const data = allPolishData?.data?.filter(item => item.saleId.buyer.email == "oli@oli.com");
-  console.log(data,77);
+  const data = allPolishData?.data?.filter(item => item.saleId.buyer.email == email);
+
 
 
 

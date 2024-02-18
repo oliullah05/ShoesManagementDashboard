@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DatePicker, DatePickerProps, Progress, Select, Space, Table } from 'antd'
 import { shoePolishApi, useGetAllShoePolishQuery, useUpdateShoePolishMutation } from '../../redux/features/shoePolish/shoePolishApi'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import moment from 'moment'
 import dayjs from 'dayjs'
 
 const ShoePolishSeller = () => {
+const {email} = useAppSelector(state=>state.auth.user)
+
+
+
   const { data:allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
-  const data = allPolishData?.data?.filter(item=>item.saleId.seller.email=="tamim@gmail.com")
+  const data = allPolishData?.data?.filter(item=>item.saleId.seller.email==email)
 
 const dispatch = useAppDispatch()
 
