@@ -1,18 +1,25 @@
 import sendResponse from '../../../utils/sendResponse';
 import QueryBuilder from '../../builder/queryBuilder'
 import AppError from '../../errors/AppError';
+import { User } from '../user/user.model';
 import { TShoe } from './shoe.interface'
 import { Shoe } from './shoe.model'
 
-const createShoe = async (payload: TShoe) => {
-   // Function to generate a shoe ID
-   function generateShoeID() {
+const createShoe = async (payload: TShoe, currentUser: any) => {
+  console.log(currentUser.email);
+  const user = await User.findOne({ email: currentUser.email })
+
+  if (!user) {
+    throw new AppError(404, "user not found")
+  }
+
+  function generateShoeID() {
     const prefix = 'SHOE';
     const year = new Date().getFullYear();
     const uniqueCode = generateUniqueCode();
     return `${prefix}-${year}-${uniqueCode}`;
   }
-  
+
   // Function to generate a random alphanumeric code
   function generateUniqueCode() {
     const alphanumericCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -23,8 +30,8 @@ const createShoe = async (payload: TShoe) => {
     }
     return uniqueCode;
   }
-
-  payload.authenticityCode=generateShoeID()
+payload.createdBy=user._id
+  payload.authenticityCode = generateShoeID()
   const result = await Shoe.create(payload)
 
   return result;
@@ -47,10 +54,10 @@ const getSingleShoe = async (id: string) => {
   return result
 }
 const getSingleShoeByAuthenticityCode = async (authenticityCode: string) => {
-  const result = await Shoe.findOne({authenticityCode})
-//  if(!result){
-//     throw new AppError(404,"This shoe is not authticate")
-//  }
+  const result = await Shoe.findOne({ authenticityCode })
+  //  if(!result){
+  //     throw new AppError(404,"This shoe is not authticate")
+  //  }
 
   return result
 }

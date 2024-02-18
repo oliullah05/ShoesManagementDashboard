@@ -2,17 +2,17 @@ import { createBrowserRouter } from 'react-router-dom'
 import MainLayout from '../components/layout/MainLayout'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
-import AllShoes from '../pages/shoe/AllShoes'
-import AddShoe from '../pages/shoe/AddShoe'
-import ProtectedRoute from './ProtectedRoute'
+import ProductVerification from '../pages/productVerification/ProductVerification'
 import Sale from '../pages/sale/Sale'
 import SalesHistory from '../pages/sales history/SalesHistory'
+import AddShoe from '../pages/shoe/AddShoe'
+import AllShoes from '../pages/shoe/AllShoes'
 import DuplicateAndEdit from '../pages/shoe/DuplicateAndEdit'
-import ProductVerification from '../pages/productVerification/ProductVerification'
-import { decodeToken } from '../utils/verifyToken'
+import ProtectedRoute from './ProtectedRoute'
+import ShoePolish from '../pages/shoePolish/shoePolish'
 
-const token  = localStorage.getItem("persist:auth")
-const role = JSON.parse(JSON.parse(token)?.user)?.role;
+// const token  = localStorage.getItem("persist:auth")
+// const role = JSON.parse(JSON.parse(token)?.user)?.role;
 const router = createBrowserRouter([
   {
     path: '/',
@@ -41,12 +41,16 @@ const router = createBrowserRouter([
         element: <Sale></Sale>,
       },
       {
-        path: '/sales-history',
+        path: 'sales-history',
         element: <SalesHistory></SalesHistory>,
       },
       {
-        path: '/product-verification',
+        path: 'product-verification',
         element:<ProtectedRoute role='buyer'> <ProductVerification></ProductVerification></ProtectedRoute>,
+      },
+      {
+        path: 'polish-request',
+        element: <ShoePolish></ShoePolish>,
       },
     ],
   },

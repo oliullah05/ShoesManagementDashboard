@@ -4,8 +4,9 @@ import sendResponse from '../../../utils/sendResponse'
 import { ShoeServices } from './shoe.service'
 
 const createShoe = catchAsync(async (req: Request, res: Response) => {
+  const currentUser = req.user;
   const userData = req.body
-  const result = await ShoeServices.createShoe(userData)
+  const result = await ShoeServices.createShoe(userData,currentUser)
   sendResponse(res, {
     statusCode: 201,
     success: true,

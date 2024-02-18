@@ -12,8 +12,8 @@ const saleApi = baseApi.injectEndpoints({
     }),
 
     getAllSale: builder.query({
-      query: (period) => ({
-        url: `/sale${period ? `/${period}` : ''}`,
+      query: (email) => ({
+        url: `/sale/email=${email}`,
         method: 'GET',
       }),
       providesTags: ['saleToShoe'],

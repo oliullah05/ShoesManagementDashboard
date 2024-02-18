@@ -2,12 +2,13 @@ import { z } from "zod";
 
 const CreateShoePolishValidationSchema = z.object({
   body:z.object({
-    user_id: z.string(), 
-    type_of_polish: z.enum(["standard", "medium", "'premium'"]),
-    seller_id: z.string(), 
+    saleId: z.string(),
+    buyer: z.string(),
+    type_of_polish: z.enum(["standard", "medium", "premium"]),
+    seller: z.string(),
     level_of_shine: z.enum(["low", "medium", "high"]),
     special_instructions: z.string(),
-    status: z.enum(["pending", "in_progress", "complete"]).default("pending"),
+    status: z.enum(["received", "in_progress", "complete"]).default("received"),
     estimated_completion_time: z.string(),
     cost: z.number(),
   })

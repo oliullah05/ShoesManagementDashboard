@@ -9,7 +9,6 @@ import { Layout, Menu } from 'antd'
 import { NavLink, Outlet } from 'react-router-dom'
 import { logout } from '../../redux/features/auth/authSlice'
 import { useAppDispatch } from '../../redux/hooks'
-import ProductVerification from '../../pages/productVerification/ProductVerification'
 
 const { Header, Content, Sider } = Layout
 
@@ -50,6 +49,11 @@ const MainLayout = () => {
       key: 'Product Verification',
       icon: <HistoryOutlined />,
       label: <NavLink to={'/product-verification'}>Product Verification</NavLink>,
+    },
+    {
+      key: 'Polish Request',
+      icon: <HistoryOutlined />,
+      label: <NavLink to={'/polish-request'}>Polish Request</NavLink>,
     },
 
     {

@@ -4,8 +4,10 @@ import { SaleServices } from './sale.service'
 import sendResponse from '../../../utils/sendResponse'
 
 const createSale = catchAsync(async (req: Request, res: Response) => {
+const currentUser = req.user;
+
   const userData = req.body
-  const result = await SaleServices.createSale(userData)
+  const result = await SaleServices.createSale(userData,currentUser)
   sendResponse(res, {
     statusCode: 201,
     success: true,

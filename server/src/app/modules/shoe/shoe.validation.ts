@@ -20,6 +20,7 @@ const createShoeValidationSchema = z.object({
     rating:z.number().optional(),
     description:z.string().optional(),
     sizes: z.array(z.string()).optional(),
+    createdBy:z.string().optional()
   }),
 })
 

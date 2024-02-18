@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, Types, model } from 'mongoose'
 import { TShoe } from './shoe.interface'
 import { array } from 'zod'
 
@@ -35,6 +35,9 @@ export const shoeSchema = new Schema<TShoe>(
     },
     sizes:{
       type:[String]
+    },
+    createdBy:{
+      type:Schema.Types.ObjectId
     }
   },
   {

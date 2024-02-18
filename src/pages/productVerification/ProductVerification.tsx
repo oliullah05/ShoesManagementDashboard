@@ -10,8 +10,8 @@ const ProductVerification = () => {
   const [form] = Form.useForm();
 
   const [productData, setProductData] = useState(null)
-  console.log(productData, 88);
-  const [authenticityCode, setAuthenticityCode] = useState("SHOE-2024-7LMRRS")
+
+  // const [authenticityCode, setAuthenticityCode] = useState("SHOE-2024-7LMRRS")
   const dispatch = useAppDispatch()
 
   // console.log(data);

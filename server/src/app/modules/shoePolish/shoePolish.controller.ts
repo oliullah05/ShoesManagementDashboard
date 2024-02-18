@@ -5,8 +5,9 @@ import sendResponse from "../../../utils/sendResponse"
 
 
 const createShoePolish = catchAsync(async (req: Request, res: Response) => {
+    const currentUser = req.user
     const userData = req.body
-    const result = await shoePolishPolishServices.createshoePolish(userData)
+    const result = await shoePolishPolishServices.createshoePolish(userData,currentUser)
     sendResponse(res, {
         statusCode: 201,
         success: true,

@@ -3,19 +3,19 @@ import {
   Avatar,
   Card,
   Col,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
   Progress,
   Row,
-  Modal,
-  Input,
-  Form,
-  InputNumber,
-  DatePicker,
   Space,
 } from 'antd'
-import { useGetAllShoesQuery } from '../../redux/features/shoe/shoeApi'
 import { useEffect, useState } from 'react'
-import { useCreateSaleMutation } from '../../redux/features/sale/saleApi'
 import { toast } from 'sonner'
+import { useCreateSaleMutation } from '../../redux/features/sale/saleApi'
+import { useGetAllShoesQuery } from '../../redux/features/shoe/shoeApi'
 interface FormData {
   minPrice: string
   maxPrice: string
@@ -30,6 +30,7 @@ interface FormData {
 const { Meta } = Card
 
 const Sale = () => {
+
   const [dynamicURL, setDynamicURL] = useState('')
   const [formData, setFormData] = useState<FormData>({
     minPrice: '',
@@ -42,7 +43,6 @@ const Sale = () => {
     model: '',
   })
 
-  // console.log({dynamicURL});
 
   const generateDynamicURL = () => {
     const baseEndpoint = ''
@@ -92,9 +92,15 @@ const Sale = () => {
   const handleOk = async () => {
     try {
       const values = await form.validateFields()
-      // values.saleDate = new Date(values.saleDate)
-      // console.log("Received values:", values);
-      const res = await createSale(values)
+const shoeData =   {
+  shoeId: values.shoeId,
+  price: values.price,
+  quantitySold: values.quantitySold,
+  saleDate:values.saleDate,
+  seller: values.createdBy
+}
+
+      const res = await  createSale(shoeData)
 
 
       setIsModalOpen(false)
@@ -224,7 +230,7 @@ const Sale = () => {
               actions={[
                 <div
                   onClick={() => {
-                    form.setFieldsValue({ shoeId: item._id })
+                    form.setFieldsValue({ shoeId: item._id,createdBy:item.createdBy,price:item.price })
                     showModal()
                   }}
                   style={{
@@ -236,7 +242,7 @@ const Sale = () => {
                   }}
                   key="sale"
                 >
-                  Sell
+                  Buy
                 </div>,
               ]}
             >
@@ -264,13 +270,19 @@ const Sale = () => {
           <Form.Item name="shoeId" hidden>
             <Input />
           </Form.Item>
-          <Form.Item
+          <Form.Item name="createdBy" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item name="price" hidden>
+            <Input />
+          </Form.Item>
+          {/* <Form.Item
             label="Buyer Name"
             name="buyerName"
             rules={[{ required: true, message: 'Please enter the buyer name' }]}
           >
             <Input />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             label="Quantity"
             name="quantitySold"

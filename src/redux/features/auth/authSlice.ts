@@ -6,7 +6,7 @@ export type TUser = {
   role: string
   iat: number
   exp: number
-}
+}| null
 
 type TAuthState = {
   user: null | TUser

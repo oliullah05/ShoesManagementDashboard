@@ -1,14 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { App } from 'antd'
 import AppError from '../../errors/AppError'
 import { Shoe } from '../shoe/shoe.model'
+import { User } from '../user/user.model'
 import { TSale } from './sale.interface'
 import { Sale } from './sale.model'
 
-const createSale = async (payload: TSale) => {
+const createSale = async (payload: TSale, currentUser: any) => {
+const user = await User.findOne({email:currentUser.email})
+if(!user){
+  throw new AppError(404,"user not found")
+}
+
   const isShoeExits = await Shoe.findOne({ _id: payload.shoeId })
+  const isSellerExits = await User.findOne({ _id: payload.seller })
 
   if (!isShoeExits) {
-    throw new AppError(404, 'shoe not found')
+    throw new AppError(404, 'Shoe not found')
+  }
+
+
+  if (!isSellerExits) {
+    throw new AppError(404, 'Seller not found')
   }
 
   if (isShoeExits?.quantity < payload.quantitySold) {
@@ -17,6 +30,8 @@ const createSale = async (payload: TSale) => {
       "Oops! It looks like we don't have enough stock for the requested quantity. Please choose a lower quantity or contact support for assistance.",
     )
   }
+
+  payload.buyer = user._id
 
   const result = await Sale.create(payload)
 

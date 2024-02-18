@@ -1,3 +1,5 @@
+import { Types } from "mongoose"
+
 export type TShoe = {
   name: string
   price: number
@@ -18,4 +20,5 @@ export type TShoe = {
   description:string
   authenticityCode:string
   sizes:[string]
+  createdBy?:Types.ObjectId
 }
