@@ -21,6 +21,7 @@ router.put(
   ShoePolishControllers.updateShoePolish,
 )
 
+router.patch('/:email', auth(), ShoePolishControllers.getShoePolishByEmail)
 router.get('/', auth(), ShoePolishControllers.getAllShoePolish)
 
 

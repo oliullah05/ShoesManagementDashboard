@@ -10,25 +10,22 @@ export const shoePolishApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['shoePolish'] as unknown as undefined,
     }),
+    updateShoePolish: builder.mutation({
+      query: (data) => ({
+        url: `/shoePolish/${data.id}`,
+        method: 'PUT',
+        body: data.data,
+      }),
+      invalidatesTags: ['shoePolish'] as unknown as undefined,
+    }),
 
     getAllShoePolish: builder.query({
-      query: (query) => {
-        // console.log(query);
-
-        if (query) {
-          return {
-            url: `/shoe/${query}&isDeleted=false`,
-            method: 'GET',
-          }
-        }
-
-        return {
-          url: '/shoe/?isDeleted=false',
+        query: () => ({
+          url: `/shoePolish`,
           method: 'GET',
-        }
-      },
-      providesTags: ['shoePolish'] as unknown as undefined,
-    }),
+        }),
+        providesTags: ['shoePolish'],
+      }),
 
 
   }),
@@ -36,6 +33,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
 
 export const {
   useAddShoePolishMutation,
-  useGetAllShoePolishQuery
+  useGetAllShoePolishQuery,
+  useUpdateShoePolishMutation
 
 } = shoePolishApi

@@ -7,5 +7,5 @@ export type TShoePolish = {
     special_instructions: string,
     status:  "received" |"in_progress" | "complete",
     estimated_completion_time:Date,
-    cost:number
+    cost:number,
 }

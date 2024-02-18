@@ -16,12 +16,25 @@ const createShoePolish = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getAllShoePolish = catchAsync(async (req, res) => {
+  
     const result = await shoePolishPolishServices.getAllShoePolish(req.query)
 
     sendResponse(res, {
         statusCode: 200,
         success: true,
         message: 'ShoePolish are retrieved successfully',
+        data: result,
+    })
+})
+const getShoePolishByEmail= catchAsync(async (req, res) => {
+    const {email} = req.params;
+    console.log(email);
+    const result = await shoePolishPolishServices.getAllShoePolish(req.query,email)
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'ShoePolish is retrieved successfully',
         data: result,
     })
 })
@@ -57,4 +70,5 @@ export const ShoePolishControllers = {
     getAllShoePolish,
     getSingleShoePolish,
     updateShoePolish,
+    getShoePolishByEmail
 }

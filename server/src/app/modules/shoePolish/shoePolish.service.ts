@@ -29,6 +29,38 @@ const getAllShoePolish = async (query: Record<string, unknown>) => {
         {
             path: 'seller',
             model: 'User', 
+            select:"-password"
+        },
+        {
+            path: 'buyer',
+            model: 'User', 
+            select:"-password"
+        },
+    ],
+}), query)
+    // .search(['brand', 'model', 'name'])
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
+
+  // const result = await shoePolishPolishQuery.modelQuery
+  // return result
+
+  const result = await shoePolishPolishQuery.modelQuery;
+  return result
+}
+const getShoePolishByEmail = async (query: Record<string, unknown>,buyerEmail:string) => {
+  const shoePolishPolishQuery = new QueryBuilder(ShoePolish.find() .populate({
+    path: 'saleId',
+    populate: [
+        {
+            path: 'shoeId',
+            model: 'Shoe',
+        },
+        {
+            path: 'seller',
+            model: 'User', 
         },
         {
             path: 'buyer',
@@ -42,8 +74,11 @@ const getAllShoePolish = async (query: Record<string, unknown>) => {
     .paginate()
     .fields()
 
-  const result = await shoePolishPolishQuery.modelQuery
-  return result
+  // const result = await shoePolishPolishQuery.modelQuery
+  // return result
+
+ 
+   return shoePolishPolishQuery.modelQuery.where('saleId.buyer.email').equals(buyerEmail);
 }
 
 const getSingleShoePolish = async (id: string) => {
@@ -63,6 +98,7 @@ export const shoePolishPolishServices = {
   createshoePolish,
   getSingleShoePolish,
   updateShoePolish,
-  getAllShoePolish
+  getAllShoePolish,
+  getShoePolishByEmail
 
 }

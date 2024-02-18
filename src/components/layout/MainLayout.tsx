@@ -53,7 +53,12 @@ const MainLayout = () => {
     {
       key: 'Polish Request',
       icon: <HistoryOutlined />,
-      label: <NavLink to={'/polish-request'}>Polish Request</NavLink>,
+      label: <NavLink to={'/polish-request'}>Polish Request buyer</NavLink>,
+    },
+    {
+      key: 'Polish Request Seller',
+      icon: <HistoryOutlined />,
+      label: <NavLink to={'/polish-request-seller'}>Polish Request Seller</NavLink>,
     },
 
     {

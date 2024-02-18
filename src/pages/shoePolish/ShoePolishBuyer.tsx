@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Progress, Space, Table } from 'antd'
-import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
+import { useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
 
-const ShoePolish = () => {
-  const { data, isLoading } = useGetAllSaleQuery(undefined)
+const ShoePolishBuyer = () => {
+  const { data:allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
+
+  const data = allPolishData?.data?.filter(item=>item.saleId.buyer.email=="oli@oli.com");
+console.log(data);
+
+
+
   if (isLoading) {
     return (
       <Space className="h-screen w-full flex justify-center items-center" wrap>
@@ -12,21 +18,33 @@ const ShoePolish = () => {
     )
   }
 
-  const dataSource = data?.data?.map((item: any) => {
-    const { _id, shoeId, buyerName, quantitySold, saleDate } = item
+  // const dataSource = data?.data?.map((item: any) => {
+  //   const { _id ,saleId} = item
 
-    const name = shoeId ? shoeId.name : null
-    const img = shoeId ? shoeId.img : null
 
-    return {
-      key: _id,
-      name,
-      image: <img src={img} alt={name} style={{ width: 50, height: 50 }} />,
-      quantity: quantitySold,
-      buyerName,
-      saleDate,
-    }
-  })
+  //   // const img = item.saleId.shoeId.img;
+
+  //   return {
+  //     key: _id,
+  //     // name,
+  //     image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
+  //     // quantity: quantitySold,
+  //     // buyerName,
+  //     // saleDate,
+  //   }
+  // })
+
+  const dataSource = data.map(({ saleId,status,estimated_completion_time }) => ({
+    image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
+    name:saleId.shoeId.name,
+    quantity:saleId.
+    quantitySold,
+    sellerName:saleId.seller.name,
+    saleDate:saleId.saleDate,
+    polishRequest:`${status?status:"Send Polish Request"}`,
+    polishStatus:`${status?status:"No pending polish requests"}`,
+    estimated_completion_time:`${estimated_completion_time?estimated_completion_time:"No pending polish requests"}`
+  }));
 
   const columns = [
     {
@@ -120,4 +138,4 @@ const ShoePolish = () => {
   )
 }
 
-export default ShoePolish
+export default ShoePolishBuyer

@@ -62,6 +62,8 @@ const getSingleShoeByAuthenticityCode = async (authenticityCode: string) => {
   return result
 }
 
+
+
 const updateShoe = async (id: string, payload: Partial<TShoe>) => {
   const result = await Shoe.findOneAndUpdate({ _id: id }, payload, {
     new: true,
