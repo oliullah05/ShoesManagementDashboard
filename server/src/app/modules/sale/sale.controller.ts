@@ -38,9 +38,20 @@ const getSingleSale = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const updateSale = catchAsync(async (req, res) => {
+  const { saleId } = req.params
+  const result = await SaleServices.updateSale(saleId, req.body)
 
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Sale is updated successfully',
+    data: result,
+  })
+})
 export const SaleControllers = {
   createSale,
   getAllSales,
   getSingleSale,
+  updateSale
 }

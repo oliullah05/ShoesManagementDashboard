@@ -17,6 +17,10 @@ const saleSchema = new Schema<TSale>({
     type: Schema.Types.ObjectId,
     ref:"User"
   },
+  polishId: {
+    type: Schema.Types.ObjectId,
+    ref:"ShoePolish"
+  },
   seller: {
     type: Schema.Types.ObjectId,
     required: [true, 'Seller name is required'],

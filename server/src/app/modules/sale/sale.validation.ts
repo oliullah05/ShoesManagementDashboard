@@ -21,6 +21,7 @@ export const createSaleValidationSchema = z.object({
 export const upadteSaleValidationSchema = z.object({
   body: z.object({
     shippingAddress: z.string().optional(),
+    polishId:z.string().optional(),
     isDelivered: z.boolean().optional().default(false),
     deliveryDate: z.date().optional(),
     notes: z.string().optional(),

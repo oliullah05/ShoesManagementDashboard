@@ -7,6 +7,7 @@ export type TSale = {
   seller: Types.ObjectId
   saleDate:string
   price:number
+  polishId:Types.ObjectId;
   totalAmount?: number
   paymentMethod?: string
   shippingAddress?: string; 

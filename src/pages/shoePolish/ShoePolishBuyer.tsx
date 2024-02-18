@@ -13,8 +13,6 @@ const ShoePolishBuyer = () => {
   const data = allSaleData?.data?.filter(item => item?.buyer?.email == email);
 
 
-
-
   if (isLoading) {
     return (
       <Space className="h-screen w-full flex justify-center items-center" wrap>
@@ -43,7 +41,7 @@ const ShoePolishBuyer = () => {
 
 
 
-  const dataSource = data?.map(({_id, saleId,shoeId,status,
+  const dataSource = data?.map(({_id,polishId, saleId,shoeId,status,
     quantitySold,seller
 ,     estimated_completion_time,saleDate
 }) => ({
@@ -54,8 +52,8 @@ const ShoePolishBuyer = () => {
     sellerName: seller.name,
     saleDate:saleDate,
     // polishRequest:status ?<Button color='green'>Polish Requested</Button>:<Button color='green'>Send Polish Request</Button>,
-    polishStatus: `${status ? status : "No pending polish requests"}`,
-    estimated_completion_time: `${estimated_completion_time ? estimated_completion_time : "No pending polish requests"}`
+    polishStatus: `${polishId ? polishId.status : "No pending polish requests"}`,
+    estimated_completion_time: `${polishId ? polishId.estimated_completion_time : "No pending polish requests"}`
   }));
 
 

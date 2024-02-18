@@ -12,7 +12,12 @@ router.post(
   validateRequest(SaleValidationSchema.createSaleValidationSchema),
   SaleControllers.createSale,
 )
-
+router.patch(
+  '/:saleId',
+  auth(),
+  validateRequest(SaleValidationSchema.upadteSaleValidationSchema),
+  SaleControllers.updateSale
+)
 router.get('/single/:saleId', auth(), SaleControllers.getSingleSale)
 
 router.get('/', auth(), SaleControllers.getAllSales)

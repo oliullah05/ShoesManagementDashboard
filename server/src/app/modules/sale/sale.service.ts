@@ -103,7 +103,7 @@ const getAllSales = async (period?: string) => {
   }).populate({
     path: 'seller',
     select: '-password',
-  })
+  }).populate("polishId")
 
   return result
 }
@@ -113,8 +113,17 @@ const getSingleSale = async (id: string) => {
   return result
 }
 
+
+const updateSale = async (id: string, payload: Partial<TSale>) => {
+  const result = await Sale.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  })
+  return result
+}
+
 export const SaleServices = {
   createSale,
   getAllSales,
   getSingleSale,
+  updateSale
 }
