@@ -7,14 +7,19 @@ import  { ShoePolish } from "./shoePolish.model"
 
 
 const createshoePolish = async (payload: TShoePolish) => {
-
-
-
 const sale =await Sale.findById(payload.saleId)
 if(!sale){
   throw new AppError(404,"sale not found")
 }
   const result =await  ShoePolish.create(payload)
+if(!result){
+  throw new AppError(404,"shoe not created")
+}
+
+ await Sale.findOneAndUpdate({_id:payload.saleId},{polishId:result._id},{new:true})
+
+
+
   return result
 }
 

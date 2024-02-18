@@ -16,7 +16,7 @@ const saleApi = baseApi.injectEndpoints({
         url: `/sale`,
         method: 'GET',
       }),
-      providesTags: ['saleToShoe'],
+      providesTags: ['saleToShoe',"shoePolishToSale"],
     }),
   }),
 })

@@ -8,7 +8,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['shoePolish'] as unknown as undefined,
+      invalidatesTags: ['shoePolish',"shoePolishToSale"] as unknown as undefined,
     }),
     updateShoePolish: builder.mutation({
       query: (data) => ({
@@ -24,7 +24,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
           url: `/shoePolish`,
           method: 'GET',
         }),
-        providesTags: ['shoePolish'],
+        providesTags: ['shoePolish',"shoePolishToSale"],
       }),
 
 

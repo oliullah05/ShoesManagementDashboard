@@ -67,10 +67,15 @@ const ShoePolishBuyer = () => {
     console.log(saleId);
   };
 
-  const onFinishFormData = (values: any) => {
-    console.log('Success:', values);
+  const onFinishFormData = (values: any,id) => {
+    console.log('Success:', values,id);
   };
   
+const handleSale= (id)=>{
+  console.log("sdfd");
+  console.log(id);
+}
+
   const dataSource = data?.map(({_id,polishId, saleId,shoeId,status,
     quantitySold,seller
 ,     estimated_completion_time,saleDate
@@ -85,7 +90,7 @@ const ShoePolishBuyer = () => {
     <Button className='bg-[#1677ff]' type="primary" onClick={showModal}>
       Do Polish Request
     </Button>
-    <Modal   okButtonProps={{ hidden: true }}
+    <Modal  destroyOnClose  okButtonProps={{ hidden: true }}
         cancelButtonProps={{ hidden: true }} title="Basic Modal" open={isModalOpen} onOk={()=>handleOk(_id)} onCancel={handleCancel}>
       {/*  */}
       <Form
@@ -93,10 +98,12 @@ const ShoePolishBuyer = () => {
     labelCol={{ span: 8 }}
     wrapperCol={{ span: 16 }}
     style={{ maxWidth: 600 }}
-    initialValues={{ remember: true }}
-    onFinish={onFinishFormData}
+    initialValues={{ remember: false }}
+   
+    onFinish={(data)=>onFinishFormData(data,_id)}
     // onFinishFailed={onFinishFailed}
     autoComplete="off"
+
   >
     <Form.Item<FieldType>
       label="Username"
@@ -123,7 +130,8 @@ const ShoePolishBuyer = () => {
     </Form.Item>
 
     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button className='bg-[#1677ff]' onClick={handleCancel}  type="primary" htmlType="submit">
+    {/* handleCancel */}
+      <Button className='bg-[#1677ff]' onClick={()=>handleSale(_id)}  type="primary" htmlType="submit">
         Submit
       </Button>
     </Form.Item>
