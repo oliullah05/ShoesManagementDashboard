@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Progress, Space, Table } from 'antd'
+import { Button, Input, Modal, Progress, Space, Table, Tag } from 'antd'
 import { useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
+import { Form } from 'react-router-dom';
+import { useState } from 'react';
 
 const ShoePolishBuyer = () => {
-  const { data:allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
-
-  const data = allPolishData?.data?.filter(item=>item.saleId.buyer.email=="oli@oli.com");
-console.log(data);
+  const { data: allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const data = allPolishData?.data?.filter(item => item.saleId.buyer.email == "oli@oli.com");
+  console.log(data,77);
 
 
 
@@ -33,18 +35,41 @@ console.log(data);
   //     // saleDate,
   //   }
   // })
+  // `${status?"Your Polish Is Pending":"Send Polish Request"}`
 
-  const dataSource = data.map(({ saleId,status,estimated_completion_time }) => ({
+
+
+
+  const dataSource = data.map(({ saleId, status, estimated_completion_time }) => ({
+    key:saleId._id,
     image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
-    name:saleId.shoeId.name,
-    quantity:saleId.
-    quantitySold,
-    sellerName:saleId.seller.name,
-    saleDate:saleId.saleDate,
-    polishRequest:`${status?status:"Send Polish Request"}`,
-    polishStatus:`${status?status:"No pending polish requests"}`,
-    estimated_completion_time:`${estimated_completion_time?estimated_completion_time:"No pending polish requests"}`
+    name: saleId.shoeId.name,
+    quantity: saleId.
+      quantitySold,
+    sellerName: saleId.seller.name,
+    saleDate: saleId.saleDate,
+    // polishRequest:status ?<Button color='green'>Polish Requested</Button>:<Button color='green'>Send Polish Request</Button>,
+    polishStatus: `${status ? status : "No pending polish requests"}`,
+    estimated_completion_time: `${estimated_completion_time ? estimated_completion_time : "No pending polish requests"}`
   }));
+
+
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+
+
+
 
   const columns = [
     {
@@ -74,8 +99,16 @@ console.log(data);
     },
     {
       title: 'Polish Request',
-      dataIndex: 'polishRequest',
-      key: 'polishRequest',
+      // dataIndex: 'polishRequest',
+      key: 'polishRequestX',
+      render: (data) => {
+        console.log(data, 44);
+        return <>
+          <Button type="primary" onClick={showModal}>
+            Open Modal
+          </Button>
+        </>
+      }
     },
     {
       title: 'Polish Status',
@@ -134,6 +167,9 @@ console.log(data);
         columns={columns}
         dataSource={dataSource}
       />
+ <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <input />
+          </Modal>
     </div>
   )
 }

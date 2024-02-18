@@ -79,12 +79,12 @@ const Sale = () => {
     setDynamicURL(generateDynamicURL())
   }, [formData])
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [form] = Form.useForm()
+
   const [createSale] = useCreateSaleMutation()
 
   // console.log(error);
-
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [form] = Form.useForm()
   const showModal = () => {
     setIsModalOpen(true)
   }
