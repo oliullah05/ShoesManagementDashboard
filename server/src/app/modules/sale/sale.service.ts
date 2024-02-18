@@ -97,6 +97,12 @@ const getAllSales = async (period?: string) => {
   const result = await Sale.find(query).populate({
     path: 'shoeId',
     select: 'name img',
+  }).populate({
+    path: 'buyer',
+    select: '-password',
+  }).populate({
+    path: 'seller',
+    select: '-password',
   })
 
   return result

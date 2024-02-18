@@ -30,7 +30,7 @@ const createShoe = async (payload: TShoe, currentUser: any) => {
     }
     return uniqueCode;
   }
-payload.createdBy=user._id
+  payload.createdBy = user._id
   payload.authenticityCode = generateShoeID()
   const result = await Shoe.create(payload)
 

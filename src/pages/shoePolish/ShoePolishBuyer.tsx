@@ -3,12 +3,14 @@ import { Button, Input, Modal, Progress, Space, Table, Tag } from 'antd'
 import { useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
 import { useState } from 'react';
 import { useAppSelector } from '../../redux/hooks';
+import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi';
 
 const ShoePolishBuyer = () => {
   const {email} = useAppSelector(state=>state.auth.user)
-  const { data: allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
+  const { data: allSaleData, isLoading } = useGetAllSaleQuery(undefined)
+  console.log(allSaleData?.data,88);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const data = allPolishData?.data?.filter(item => item.saleId.buyer.email == email);
+  const data = allSaleData?.data?.filter(item => item?.buyer?.email == email);
 
 
 
@@ -41,14 +43,16 @@ const ShoePolishBuyer = () => {
 
 
 
-  const dataSource = data.map(({ saleId, status, estimated_completion_time }) => ({
-    key:saleId._id,
-    image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
-    name: saleId.shoeId.name,
-    quantity: saleId.
-      quantitySold,
-    sellerName: saleId.seller.name,
-    saleDate: saleId.saleDate,
+  const dataSource = data?.map(({_id, saleId,shoeId,status,
+    quantitySold,seller
+,     estimated_completion_time,saleDate
+}) => ({
+    key:saleId?._id,
+    image: <img src={shoeId?.img} alt={shoeId?.img} style={{ width: 50, height: 50 }} />,
+    name: shoeId.name,
+    quantity:quantitySold,
+    sellerName: seller.name,
+    saleDate:saleDate,
     // polishRequest:status ?<Button color='green'>Polish Requested</Button>:<Button color='green'>Send Polish Request</Button>,
     polishStatus: `${status ? status : "No pending polish requests"}`,
     estimated_completion_time: `${estimated_completion_time ? estimated_completion_time : "No pending polish requests"}`

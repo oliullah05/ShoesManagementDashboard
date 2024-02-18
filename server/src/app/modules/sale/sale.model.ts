@@ -5,6 +5,7 @@ const saleSchema = new Schema<TSale>({
   shoeId: {
     type: Schema.Types.ObjectId,
     required: [true, 'Shoe ID is required'],
+    ref:"Shoe"
   },
   quantitySold: {
     type: Number,
@@ -13,11 +14,13 @@ const saleSchema = new Schema<TSale>({
   },
 
   buyer: {
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref:"User"
   },
   seller: {
     type: Schema.Types.ObjectId,
     required: [true, 'Seller name is required'],
+    ref:"User"
   },
   saleDate: {
     type: String,

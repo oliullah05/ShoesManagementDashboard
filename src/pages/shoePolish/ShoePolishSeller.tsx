@@ -11,7 +11,7 @@ const {email} = useAppSelector(state=>state.auth.user)
 
 
   const { data:allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
-  const data = allPolishData?.data?.filter(item=>item.saleId.seller.email==email)
+  const data = allPolishData?.data?.filter(item=>item?.saleId?.seller?.email==email)
 
 const dispatch = useAppDispatch()
 
