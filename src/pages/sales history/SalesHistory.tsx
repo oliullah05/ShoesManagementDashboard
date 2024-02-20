@@ -14,7 +14,7 @@ const {email}= useAppSelector(state=>state?.auth.user)||{}
 console.log(saleData?.data[0].seller);
 
 
-const data = saleData?.data?.filter(item=>item?.seller?.email==email)
+const data = saleData?.data?.filter(item=>item?.buyer?.email==email)
 
   if (isLoading) {
     return (
@@ -27,17 +27,17 @@ const data = saleData?.data?.filter(item=>item?.seller?.email==email)
 // console.log(sateData.data);
 
   const dataSource = data?.map((item: any) => {
-    const { _id, shoeId, buyerName, quantitySold, saleDate } = item
-
+    const { _id, shoeId, buyerName, quantitySold,unAuthorizedbuyerName,buyer, saleDate } = item
+console.log();
     const name = shoeId ? shoeId.name : null
     const img = shoeId ? shoeId.img : null
-
+const buyerName2 = unAuthorizedbuyerName?unAuthorizedbuyerName:buyer?.name
     return {
       key: _id,
       name,
       image: <img src={img} alt={name} style={{ width: 50, height: 50 }} />,
       quantity: quantitySold,
-      buyerName,
+      buyerName2,
       saleDate,
     }
   })
@@ -60,7 +60,7 @@ const data = saleData?.data?.filter(item=>item?.seller?.email==email)
     },
     {
       title: 'Buyer Name',
-      dataIndex: 'buyerName',
+      dataIndex: 'buyerName2',
       key: 'buyerName',
     },
     {

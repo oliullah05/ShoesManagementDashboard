@@ -11,7 +11,7 @@ const BuysHistory = () => {
   const [period, setPeriod] = useState('')
   const { data: sateData, isLoading } = useGetAllSaleQuery(period)
 
-  const data = sateData?.data?.filter(item => item?.buyer?.email == email)
+  const data = sateData?.data?.filter(item => item?.seller?.email == email)
 
   if (isLoading) {
     return (
