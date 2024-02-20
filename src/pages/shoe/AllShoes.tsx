@@ -15,6 +15,7 @@ import {
   useGetAllShoesQuery
 } from '../../redux/features/shoe/shoeApi'
 import UpdateShoe from './UpdateShoe'
+import { useAppSelector } from '../../redux/hooks'
 interface FormData {
   minPrice: string
   maxPrice: string
@@ -29,6 +30,7 @@ interface FormData {
 const { Meta } = Card
 
 const AllShoes = () => {
+  const {email}=useAppSelector(state=>state.auth.user)
   // const [selectedData, setSelectedData] = useState([] as string[])
   const [dynamicURL, setDynamicURL] = useState('')
   const [formData, setFormData] = useState<FormData>({
@@ -81,7 +83,11 @@ const AllShoes = () => {
     setDynamicURL(generateDynamicURL())
   }, [formData])
 
-  const { data, isLoading } = useGetAllShoesQuery(dynamicURL)
+  const { data:allShoeData, isLoading } = useGetAllShoesQuery(dynamicURL)
+// console.log(data?.data[0]?.createdBy?.email);
+const data = allShoeData?.data?.filter((i: { createdBy: { email: any } })=>i.createdBy?.email!==email)
+console.log(data);
+
 
   const [updateData, setUpdateData] = useState('')
 
@@ -241,7 +247,7 @@ const AllShoes = () => {
       </section>
 
       <Row gutter={[16, 16]}>
-        {data?.data?.map((item: any, index: number) => (
+        {data?.map((item: any, index: number) => (
           <Col xs={24} sm={12} md={8} lg={8} xl={8} key={index}>
             <Card
               style={{
