@@ -2,6 +2,8 @@
 import React from 'react'
 import { useUpdateShoeMutation } from '../../redux/features/shoe/shoeApi'
 import { toast } from 'sonner'
+import { saleApi, useCreateSaleMutation } from '../../redux/features/sale/saleApi'
+import { useAppDispatch } from '../../redux/hooks'
 
 // const onFinishFailed = (errorInfo: any) => {
 //   console.log('Failed:', errorInfo);
@@ -23,104 +25,43 @@ type TFieldType = {
 }
 
 const UpdateShoe: React.FC<TFieldType> = ({ updateData }: any) => {
-  const {
-    img,
-    name,
-    price,
-    quantity,
-    brand,
-    _id,
-    model,
-    style,
-    size,
-    color,
-    material,
-    closureType,
-  } = updateData
 
-  const [updateModifiedData] = useUpdateShoeMutation()
+const dispatch = useAppDispatch()
+
+// console.log(updateData,77);
   // console.log(error);
 
-  const handleUpdate = (e: any) => {
+  const handleUpdate = async(e: any) => {
     e.preventDefault()
     const form = e.target
-    const name = form.name.value
-    const img = form.img.value
-    const price = form.price.value
-    const quantity = form.quantity.value
-    const brand = form.brand.value
-    const style = form.style.value
-    const size = form.size.value
-    const color = form.color.value
-    const material = form.material.value
-    const closureType = form.closureType.value
 
-    const newUpdateData = {
-      img,
-      name,
-      price: Number(price),
-      quantity: Number(quantity),
-      brand,
-      model,
-      style,
-      size: Number(size),
-      color,
-      material,
-      closureType,
+    const quantity = form.quantity.value;
+    const seller = updateData?.createdBy?._id;
+    const shoeId = updateData?._id;
+    const saleData = {
+      quantitySold: Number(quantity),
+      seller,
+      shoeId,
+      price:updateData.price,
+      saleDate:new Date()
     }
 
-    updateModifiedData({
-      id: _id,
-      data: newUpdateData,
-    })
-
+ const res =  await  dispatch(saleApi.endpoints.createSale.initiate(saleData)).unwrap()
+console.log(res);
     toast.success('update done')
   }
 
   return (
     <section className="w-full flex justify-center items-center">
       <form onSubmit={handleUpdate} className="max-w-2xl mx-auto">
-        <section className="grid grid-cols-2 gap-4">
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={name}
-            />
-          </div>
+        <section className="grid grid-cols-1 gap-4">
 
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Image URL
-            </label>
-            <input
-              type="text"
-              id="img"
-              name="img"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={img}
-            />
-          </div>
 
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Price
-            </label>
-            <input
-              type="number"
-              id="price"
-              name="price"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={price}
-            />
-          </div>
 
-          <div className="col-span-2 sm:col-span-1">
+
+
+
+          <div className=" flex gap-4 justify-center items-center sm:col-span-1">
             <label className="block text-sm font-medium text-gray-700">
               Quantity
             </label>
@@ -129,100 +70,11 @@ const UpdateShoe: React.FC<TFieldType> = ({ updateData }: any) => {
               id="quantity"
               name="quantity"
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={quantity}
+            // defaultValue={quantity}
             />
           </div>
 
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Brand
-            </label>
-            <input
-              type="text"
-              id="brand"
-              name="brand"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={brand}
-            />
-          </div>
 
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Model
-            </label>
-            <input
-              type="text"
-              id="model"
-              name="model"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={model}
-            />
-          </div>
-
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Size
-            </label>
-            <input
-              type="number"
-              id="size"
-              name="size"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={size}
-            />
-          </div>
-
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Style
-            </label>
-            <input
-              type="text"
-              id="style"
-              name="style"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={style}
-            />
-          </div>
-
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Color
-            </label>
-            <input
-              type="text"
-              id="color"
-              name="color"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={color}
-            />
-          </div>
-
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Material
-            </label>
-            <input
-              type="text"
-              id="material"
-              name="material"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={material}
-            />
-          </div>
-
-          <div className="col-span-2 sm:col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Closure Type
-            </label>
-            <input
-              type="text"
-              id="closureType"
-              name="closureType"
-              className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              defaultValue={closureType}
-            />
-          </div>
         </section>
 
         <div className="mt-4 flex justify-center items-center">

@@ -6,13 +6,13 @@ import ProductVerification from '../pages/productVerification/ProductVerificatio
 import Sale from '../pages/sale/Sale'
 import SalesHistory from '../pages/sales history/SalesHistory'
 import AddShoe from '../pages/shoe/AddShoe'
-import AllShoes from '../pages/shoe/MyShoes.js'
 import DuplicateAndEdit from '../pages/shoe/DuplicateAndEdit'
 import ProtectedRoute from './ProtectedRoute'
 import ShoePolishBuyer from '../pages/shoePolish/ShoePolishBuyer'
 import ShoePolishSeller from '../pages/shoePolish/ShoePolishSeller'
 import BuysHistory from "../pages/buysHistory/BuysHistory.jsx"
 import MyShoes from '../pages/shoe/MyShoes.js'
+import AllShoes from '../pages/shoe/AllShoes.js'
 // const token  = localStorage.getItem("persist:auth")
 // const role = JSON.parse(JSON.parse(token)?.user)?.role;
 const router = createBrowserRouter([
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <MyShoes />,
+      },
+      {
+        path: '/all-shoes',
+        element: <AllShoes/>,
       },
       {
         path: '/my-shoes',

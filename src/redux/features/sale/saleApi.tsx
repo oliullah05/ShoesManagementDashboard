@@ -1,6 +1,6 @@
 import { baseApi } from '../../api/baseApi'
 
-const saleApi = baseApi.injectEndpoints({
+export const saleApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createSale: builder.mutation({
       query: (saleInfo) => ({

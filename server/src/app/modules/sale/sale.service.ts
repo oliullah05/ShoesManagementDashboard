@@ -13,6 +13,7 @@ if(!user){
 }
 
   const isShoeExits = await Shoe.findOne({ _id: payload.shoeId })
+  
   if(payload.seller){
     const isSellerExits = await User.findOne({ _id: payload.seller })
     if (!isSellerExits) {

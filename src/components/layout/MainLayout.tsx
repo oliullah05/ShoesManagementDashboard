@@ -28,6 +28,10 @@ const MainLayout = () => {
       label: 'Shoes Management',
       children: [
         {
+          key: 'All Shoes',
+          label: <NavLink to={'/all-shoes'}>All Shoes</NavLink>,
+        },
+        {
           key: 'My Shoes',
           label: <NavLink to={'/my-shoes'}>My Shoes</NavLink>,
         },
