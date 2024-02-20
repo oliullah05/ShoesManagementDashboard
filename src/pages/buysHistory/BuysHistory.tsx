@@ -5,13 +5,13 @@ import { useState } from 'react'
 import { useAppSelector } from '../../redux/hooks'
 
 const BuysHistory = () => {
-const {email}= useAppSelector(state=>state?.auth.user)||{}
+  const { email } = useAppSelector(state => state?.auth.user) || {}
 
 
   const [period, setPeriod] = useState('')
-  const { data:sateData, isLoading } = useGetAllSaleQuery(period)
+  const { data: sateData, isLoading } = useGetAllSaleQuery(period)
 
-const data = sateData?.data?.filter(item=>item?.buyer.email==email)
+  const data = sateData?.data?.filter(item => item?.buyer.email == email)
 
   if (isLoading) {
     return (
@@ -22,17 +22,17 @@ const data = sateData?.data?.filter(item=>item?.buyer.email==email)
   }
 
   const dataSource = data?.map((item: any) => {
-    const { _id, shoeId, buyerName, quantitySold, saleDate } = item
-
+    const { _id, shoeId, buyerName, seller, quantitySold, saleDate } = item
+    console.log(seller.name, 77);
     const name = shoeId ? shoeId.name : null
     const img = shoeId ? shoeId.img : null
-
+  const sellerName = seller.name?seller.name : item.unAuthorizedbuyerName;
     return {
       key: _id,
       name,
       image: <img src={img} alt={name} style={{ width: 50, height: 50 }} />,
       quantity: quantitySold,
-      buyerName,
+      sellerName,
       saleDate,
     }
   })
@@ -54,9 +54,9 @@ const data = sateData?.data?.filter(item=>item?.buyer.email==email)
       key: 'quantity',
     },
     {
-      title: 'Buyer Name',
-      dataIndex: 'buyerName',
-      key: 'buyerName',
+      title: 'Seller Name',
+      dataIndex: 'sellerName',
+      key: 'sellerName',
     },
     {
       title: 'Sale Date',
@@ -67,7 +67,7 @@ const data = sateData?.data?.filter(item=>item?.buyer.email==email)
 
   return (
     <div>
-       
+
       <h1 style={{ marginBottom: '20px' }}>Here are the Buys History</h1>
       <Flex wrap="wrap" gap="small">
         <Button
