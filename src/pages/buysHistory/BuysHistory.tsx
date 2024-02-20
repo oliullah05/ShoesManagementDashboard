@@ -4,15 +4,17 @@ import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useState } from 'react'
 import { useAppSelector } from '../../redux/hooks'
 
+
 const BuysHistory = () => {
   const { email } = useAppSelector(state => state?.auth.user) || {}
 
 
   const [period, setPeriod] = useState('')
   const { data: sateData, isLoading } = useGetAllSaleQuery(period)
-
-  const data = sateData?.data?.filter(item => item?.seller?.email == email)
-
+// console.log(sateData?.data[0].buyer?.email);
+  const data = sateData?.data?.filter(item => item.buyer?.email==email)
+console.log(data);
+console.log(email,99);
   if (isLoading) {
     return (
       <Space className="h-screen w-full flex justify-center items-center" wrap>

@@ -8,14 +8,14 @@ import dayjs from 'dayjs'
 const SalesHistory = () => {
 const {email}= useAppSelector(state=>state?.auth.user)||{}
 
-
+// const [data,setData]=useState([])
 
   const [period, setPeriod] = useState('')
   const { data:saleData, isLoading } = useGetAllSaleQuery(period)
-console.log(saleData?.data[0].seller);
+console.log(saleData?.data[6].unAuthorizedbuyerName);
 
 
-const data = saleData?.data?.filter(item=>item?.buyer?.email==email)
+const data = saleData?.data?.filter(item=>item?.seller?.email==email )
 
   if (isLoading) {
     return (

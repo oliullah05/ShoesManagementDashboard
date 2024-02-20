@@ -61,37 +61,40 @@ const MainLayout = () => {
       icon: <HistoryOutlined />,
       label: <NavLink to={'/product-verification'}>Product Verification</NavLink>,
     },
+    {
+      key: 'Polish Request-buyer',
+      icon: <HistoryOutlined />,
+      label: <NavLink to={'/polish-request-buyer'}>Buyer Polish Req.</NavLink>,
+    },
+    {
+      key: 'Polish Request',
+      icon: <HistoryOutlined />,
+      label: <NavLink to={'/polish-request-seller'}>Seller Polish Req.</NavLink>,
+    },
 
+    {
+      key: 'Logout',
+      icon: <LogoutOutlined />,
+      label: <span onClick={handleLogout}>Logout</span>,
+    }
   ]
 
 
-if(user?.user?.role=="buyer"){
-items.push(   {
-  key: 'Polish Request-buyer',
-  icon: <HistoryOutlined />,
-  label: <NavLink to={'/polish-request-buyer'}>Polish Request</NavLink>,
-},)
-}
+// if(user?.user?.role=="buyer"){
+// items.push(   ,)
+// }
 
-if(user?.user?.role=="seller"){
-items.push(
-  {
-  key: 'Polish Request',
-  icon: <HistoryOutlined />,
-  label: <NavLink to={'/polish-request-seller'}>Polish Request </NavLink>,
-},
+// if(user?.user?.role=="seller"){
+// items.push(
+//   ,
 
 
 
-)
-}
+// )
+// }
 
 
-items.push( {
-  key: 'Logout',
-  icon: <LogoutOutlined />,
-  label: <span onClick={handleLogout}>Logout</span>,
-})
+items.push( )
 
 
 

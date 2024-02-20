@@ -36,7 +36,7 @@ interface FormData {
 const { Meta } = Card
 
 const MyShoes = () => {
-const {email}=useAppSelector(state=>state.auth.user)
+const {email}=useAppSelector(state=>state.auth.user) || {}
 
   const [selectedData, setSelectedData] = useState([] as string[])
   const [dynamicURL, setDynamicURL] = useState('')

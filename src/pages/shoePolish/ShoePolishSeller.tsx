@@ -43,18 +43,18 @@ const dispatch = useAppDispatch()
       toast.success("status update done")
     }
   };
-
+console.log(data,88);
 
   const dataSource = data?.map(({_id, saleId,status,type_of_polish,level_of_shine,estimated_completion_time }) => ({
-    image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
-    name:saleId.shoeId.name,
-    quantity:saleId.
+    image: <img src={saleId?.shoeId?.img} alt={"name"} style={{ width: 50, height: 50 }} />,
+    name:saleId?.shoeId?.name,
+    quantity:saleId?.
     quantitySold,
     level_of_shine,
     typeOfPolish:type_of_polish,
-    buyerName:saleId.buyer.name,
+    buyerName:saleId?.buyer?.name,
     polishStatus:<Tag className={`${status=="complete"?"bg-green-300":"bg-red-300"}`}>{status=="complete"?"complete":"not complete"}</Tag>,
-    saleDate:dayjs(saleId.saleDate).format("MM-DD-YYYY"),
+    saleDate:dayjs(saleId?.saleDate).format("MM-DD-YYYY"),
     polishRequest:status!=="complete"?<Select
     className=' rounded-lg'
     defaultValue={`${status}`}

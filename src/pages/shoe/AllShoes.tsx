@@ -37,7 +37,6 @@ const { Meta } = Card
 const AllShoes = () => {
   const [selectedData, setSelectedData] = useState([] as string[])
   const [dynamicURL, setDynamicURL] = useState('')
-  const [deleShoesMany] = useDeleteShoesManyMutation()
   const [formData, setFormData] = useState<FormData>({
     minPrice: '',
     maxPrice: '',
@@ -135,28 +134,6 @@ const AllShoes = () => {
     setIsModalOpen(false)
   }
 
-  // const handleSendId = (id: string) => {
-  //   const isSelected = selectedData.includes(id)
-
-  //   if (isSelected) {
-  //     const updatedSelectedData = selectedData.filter(
-  //       (selectedId) => selectedId !== id,
-  //     )
-  //     setSelectedData(updatedSelectedData)
-  //   } else {
-  //     setSelectedData([...selectedData, id])
-  //   }
-  // }
-
-  // const handleBulkDelete = async () => {
-  //   try {
-  //     await deleShoesMany(selectedData)
-  //     toast.success('Delete many shoes successful')
-  //     setSelectedData([])
-  //   } catch (error) {
-  //     toast.error('Something went wrong')
-  //   }
-  // }
 
   return (
     <>
@@ -265,18 +242,7 @@ const AllShoes = () => {
             </div>
             {/* Add more filters as needed */}
           </div>
-          {selectedData.length > 0 && (
-            <div className="flex justify-center items-center">
-              <Button
-                // onClick={handleBulkDelete}
-                className="mb-6 "
-                type="primary"
-                danger
-              >
-                Delete Selected
-              </Button>
-            </div>
-          )}
+   
         </form>
       </section>
 

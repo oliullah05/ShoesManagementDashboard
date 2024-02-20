@@ -7,7 +7,7 @@ import Sale from '../pages/sale/Sale'
 import SalesHistory from '../pages/sales history/SalesHistory'
 import AddShoe from '../pages/shoe/AddShoe'
 import DuplicateAndEdit from '../pages/shoe/DuplicateAndEdit'
-import ProtectedRoute from './ProtectedRoute'
+
 import ShoePolishBuyer from '../pages/shoePolish/ShoePolishBuyer'
 import ShoePolishSeller from '../pages/shoePolish/ShoePolishSeller'
 import BuysHistory from "../pages/buysHistory/BuysHistory.jsx"
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <MyShoes />,
+        element: <AllShoes />,
       },
       {
         path: '/all-shoes',
@@ -64,11 +64,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'polish-request-buyer',
-        element: <ProtectedRoute role='buyer'><ShoePolishBuyer></ShoePolishBuyer></ProtectedRoute>,
+        element: <ShoePolishBuyer></ShoePolishBuyer>,
       },
       {
         path: 'polish-request-seller',
-        element:<ProtectedRoute role='seller'> <ShoePolishSeller></ShoePolishSeller></ProtectedRoute>,
+        element: <ShoePolishSeller></ShoePolishSeller>,
       },
     ],
   },
