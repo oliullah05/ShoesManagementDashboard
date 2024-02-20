@@ -34,7 +34,7 @@ interface FormData {
 }
 const { Meta } = Card
 
-const AllShoe = () => {
+const MyShoes = () => {
   const [selectedData, setSelectedData] = useState([] as string[])
   const [dynamicURL, setDynamicURL] = useState('')
   const [deleShoesMany] = useDeleteShoesManyMutation()
@@ -371,4 +371,4 @@ const AllShoe = () => {
   )
 }
 
-export default AllShoe
+export default MyShoes

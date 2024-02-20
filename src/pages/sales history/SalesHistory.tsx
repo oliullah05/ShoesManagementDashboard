@@ -3,6 +3,7 @@ import { Button, Flex, Progress, Space, Table } from 'antd'
 import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useState } from 'react'
 import { useAppSelector } from '../../redux/hooks'
+import dayjs from 'dayjs'
 
 const SalesHistory = () => {
 const {email}= useAppSelector(state=>state?.auth.user)||{}
@@ -38,7 +39,7 @@ const buyerName2 = unAuthorizedbuyerName?unAuthorizedbuyerName:buyer?.name
       image: <img src={img} alt={name} style={{ width: 50, height: 50 }} />,
       quantity: quantitySold,
       buyerName2,
-      saleDate,
+      saleDate
     }
   })
 

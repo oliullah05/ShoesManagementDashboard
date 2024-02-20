@@ -111,7 +111,7 @@ if(res.success){
     image: <img src={shoeId?.img} alt={shoeId?.img} style={{ width: 50, height: 50 }} />,
     name: shoeId.name,
     quantity: quantitySold,
-    sellerName: seller.name,
+    sellerName: seller?.name,
     saleDate: dayjs(saleDate).format("MM-DD-YYYY"),
     polishRequest: polishId?.status =="in_progress"  || polishId?.status =="received" ? <Button color='green'>Polish in progress</Button> : <>
       <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(_id)}>
