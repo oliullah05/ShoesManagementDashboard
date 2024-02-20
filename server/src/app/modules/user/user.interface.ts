@@ -2,6 +2,6 @@ export type TUSer = {
   name: string
   email: string
   password: string
-  role: 'buyer' | 'seller'
+  role: 'user' | 'admin'
   isDeleted: boolean
 }

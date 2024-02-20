@@ -23,7 +23,8 @@ const userSchema = new Schema<TUSer>({
   },
   role: {
     type: String,
-    required: [true, 'password is required'],
+    enum:["user","admin"],
+    default:"user"
   },
   isDeleted: {
     type: Boolean,

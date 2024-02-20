@@ -8,7 +8,7 @@ const createUserValidationSchema = z.object({
       .string()
       .min(6, { message: 'Password must be at least 6 characters long' })
       .max(20, { message: 'Password must be at most 20 characters long' }),
-    role: z.enum(['buyer', 'seller']),
+    role: z.enum(['user', 'admin']).default("user"),
     isDeleted: z.boolean().optional().default(false),
   }),
 })

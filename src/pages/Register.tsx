@@ -89,13 +89,13 @@ const Register = () => {
               placeholder="Password"
             />
           </Form.Item>
-          <Form.Item  name="role"
+          {/* <Form.Item  name="role"
             rules={[{ required: true, message: 'Please select your role!' }]} >
             <Select placeholder="Please Select Your Role!">
               <Select.Option value="buyer">Buyer</Select.Option>
               <Select.Option value="seller">Seller</Select.Option>
             </Select>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item>
             <Button
               type="primary"

@@ -1,21 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Progress, Space, Table } from 'antd'
 import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppSelector } from '../../redux/hooks'
 import dayjs from 'dayjs'
 
 const SalesHistory = () => {
-const {email}= useAppSelector(state=>state?.auth.user)||{}
+  const [data, setData] = useState([])
 
-// const [data,setData]=useState([])
+  const { email } = useAppSelector(state => state?.auth.user) || {}
+  console.log(data, 88);
+  // const [data,setData]=useState([])
 
   const [period, setPeriod] = useState('')
-  const { data:saleData, isLoading } = useGetAllSaleQuery(period)
-console.log(saleData?.data[6].unAuthorizedbuyerName);
+  const { data: saleData, isLoading } = useGetAllSaleQuery(period)
+  // console.log(saleData?.data[6].unAuthorizedbuyerName);
+
+  useEffect(() => {
+    if (!saleData || !saleData.data) {
+      // Handle the case where saleData or saleData.data is undefined
+      setData([]);
+      return;
+    }
+    // Use useEffect to update the state after the initial render
+    const unAuthorizedData = saleData && saleData?.data?.filter((item) => item?.unAuthorizedbuyerName);
+    const filteredData =saleData && saleData?.data?.filter((item) => item?.seller?.email === email);
+
+    // Merge the arrays using the spread operator
+    const mergedData = [...filteredData, ...unAuthorizedData];
+  
+    setData(mergedData);
+  }, [saleData, email]);
 
 
-const data = saleData?.data?.filter(item=>item?.seller?.email==email )
 
   if (isLoading) {
     return (
@@ -25,14 +42,14 @@ const data = saleData?.data?.filter(item=>item?.seller?.email==email )
     )
   }
 
-// console.log(sateData.data);
+  // console.log(sateData.data);
 
   const dataSource = data?.map((item: any) => {
-    const { _id, shoeId, buyerName, quantitySold,unAuthorizedbuyerName,buyer, saleDate } = item
-console.log();
+    const { _id, shoeId, buyerName, quantitySold, unAuthorizedbuyerName, buyer, saleDate } = item
+    console.log();
     const name = shoeId ? shoeId.name : null
     const img = shoeId ? shoeId.img : null
-const buyerName2 = unAuthorizedbuyerName?unAuthorizedbuyerName:buyer?.name
+    const buyerName2 = unAuthorizedbuyerName ? unAuthorizedbuyerName : buyer?.name
     return {
       key: _id,
       name,
