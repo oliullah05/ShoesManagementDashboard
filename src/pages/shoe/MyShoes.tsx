@@ -21,6 +21,7 @@ import {
   useGetAllShoesQuery,
 } from '../../redux/features/shoe/shoeApi'
 import UpdateShoe from './UpdateShoe'
+import { useAppSelector } from '../../redux/hooks'
 interface FormData {
   minPrice: string
   maxPrice: string
@@ -35,6 +36,8 @@ interface FormData {
 const { Meta } = Card
 
 const MyShoes = () => {
+const {email}=useAppSelector(state=>state.auth.user)
+
   const [selectedData, setSelectedData] = useState([] as string[])
   const [dynamicURL, setDynamicURL] = useState('')
   const [deleShoesMany] = useDeleteShoesManyMutation()
@@ -88,7 +91,13 @@ const MyShoes = () => {
     setDynamicURL(generateDynamicURL())
   }, [formData])
 
-  const { data, isLoading } = useGetAllShoesQuery(dynamicURL)
+  const { data:allShoeData, isLoading } = useGetAllShoesQuery(dynamicURL)
+
+// console.log(data.data[0].createdBy?.email);
+const data = allShoeData?.data?.filter(item=>item?.createdBy?.email==email)
+console.log(data);
+
+
 
   const [updateData, setUpdateData] = useState('')
 
@@ -265,7 +274,7 @@ const MyShoes = () => {
             </div>
             {/* Add more filters as needed */}
           </div>
-          {selectedData.length > 0 && (
+          {selectedData?.length > 0 && (
             <div className="flex justify-center items-center">
               <Button
                 onClick={handleBulkDelete}
@@ -281,7 +290,7 @@ const MyShoes = () => {
       </section>
 
       <Row gutter={[16, 16]}>
-        {data?.data?.map((item: any, index: number) => (
+        {data?.map((item: any, index: number) => (
           <Col xs={24} sm={12} md={8} lg={8} xl={8} key={index}>
             <Card
               style={{
