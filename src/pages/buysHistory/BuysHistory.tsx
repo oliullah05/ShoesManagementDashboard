@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Progress, Space, Table } from 'antd'
-import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useState } from 'react'
+import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useAppSelector } from '../../redux/hooks'
 
 
@@ -12,7 +12,7 @@ const BuysHistory = () => {
   const [period, setPeriod] = useState('')
   const { data: sateData, isLoading } = useGetAllSaleQuery(period)
 // console.log(sateData?.data[0].buyer?.email);
-  const data = sateData?.data?.filter(item => item.buyer?.email==email)
+  const data = sateData?.data?.filter((item: { buyer: { email: string | undefined } }) => item.buyer?.email==email)
 console.log(data);
 console.log(email,99);
   if (isLoading) {
@@ -24,7 +24,7 @@ console.log(email,99);
   }
 
   const dataSource = data?.map((item: any) => {
-    const { _id, shoeId, buyerName, seller, quantitySold, saleDate } = item
+    const { _id, shoeId, seller, quantitySold, saleDate } = item
     console.log(seller?.name, 77);
     const name = shoeId ? shoeId.name : null
     const img = shoeId ? shoeId.img : null

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Col, Form, Input, Row, Select } from 'antd'
+import { Button, Col, Form, Input, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useRegisterMutation } from '../redux/features/auth/authApi'

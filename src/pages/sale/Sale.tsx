@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { useCreateSaleMutation } from '../../redux/features/sale/saleApi'
 import { useGetAllShoesQuery } from '../../redux/features/shoe/shoeApi'
-import { useAppSelector } from '../../redux/hooks'
 interface FormData {
   minPrice: string
   maxPrice: string
@@ -31,7 +30,7 @@ interface FormData {
 const { Meta } = Card
 
 const Sale = () => {
-const {email}= useAppSelector(state=>state.auth.user) || {}
+// const {email}= useAppSelector(state=>state.auth.user) || {}
 // console.log(email);
   const [dynamicURL, setDynamicURL] = useState('')
   const [formData, setFormData] = useState<FormData>({
@@ -102,7 +101,7 @@ const {email}= useAppSelector(state=>state.auth.user) || {}
         unAuthorizedbuyerName:values.unAuthorizedbuyerName
       }
     // console.log(shoeData,99999999999);
-      const res = await createSale(shoeData)
+      const res:any = await createSale(shoeData)
 
 
       setIsModalOpen(false)
@@ -127,9 +126,9 @@ const {email}= useAppSelector(state=>state.auth.user) || {}
 
   const { data, isLoading } = useGetAllShoesQuery(dynamicURL)
 
-// console.log(data?.data[0]?.createdBy?.email,88);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-const filterData= data?.data?.filter(item=>item.createdBy?.email=="oli@oli.com")
+const filterData= data?.data?.filter((item: { createdBy: { email: string } })=>item.createdBy?.email=="oli@oli.com")
 
   if (isLoading) {
     return (

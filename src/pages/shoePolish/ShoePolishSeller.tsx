@@ -11,7 +11,7 @@ const {email} = useAppSelector(state=>state.auth.user)|| {}
 
 
   const { data:allPolishData, isLoading } = useGetAllShoePolishQuery(undefined)
-  const data = allPolishData?.data?.filter(item=>item?.saleId?.seller?.email==email)
+  const data = allPolishData?.data?.filter((item: { saleId: { seller: { email: string | undefined } } })=>item?.saleId?.seller?.email==email)
 
 const dispatch = useAppDispatch()
 
@@ -43,9 +43,16 @@ const dispatch = useAppDispatch()
       toast.success("status update done")
     }
   };
-console.log(data,88);
 
-  const dataSource = data?.map(({_id, saleId,status,type_of_polish,level_of_shine,estimated_completion_time }) => ({
+
+  const dataSource = data?.map(({_id, saleId,status,type_of_polish,level_of_shine,estimated_completion_time }:{
+    _id: string;
+    saleId: { shoeId: { img: string; name: string }; quantitySold: number; buyer: { name: string }; saleDate: string };
+    status: string; 
+    type_of_polish: string;
+    level_of_shine: string;
+    estimated_completion_time: string;
+  }) => ({
     image: <img src={saleId?.shoeId?.img} alt={"name"} style={{ width: 50, height: 50 }} />,
     name:saleId?.shoeId?.name,
     quantity:saleId?.
@@ -127,43 +134,6 @@ console.log(data,88);
   return (
     <div>
       <h1 style={{ marginBottom: '20px' }}>Here are the your selling History</h1>
-      {/* <Flex wrap="wrap" gap="small">
-        <Button
-          className="bg-[#1677ff]"
-          onClick={() => setPeriod('')}
-          type="primary"
-        >
-          All
-        </Button>
-        <Button
-          className="bg-[#1677ff]"
-          onClick={() => setPeriod('daily')}
-          type="primary"
-        >
-          Daily
-        </Button>
-        <Button
-          className="bg-[#1677ff]"
-          onClick={() => setPeriod('weekly')}
-          type="primary"
-        >
-          Weekly
-        </Button>
-        <Button
-          className="bg-[#1677ff]"
-          onClick={() => setPeriod('monthly')}
-          type="primary"
-        >
-          Monthly
-        </Button>
-        <Button
-          className="bg-[#1677ff]"
-          onClick={() => setPeriod('yearly')}
-          type="primary"
-        >
-          Yearly
-        </Button>
-      </Flex> */}
       <Table
         style={{ marginTop: '20px' }}
         columns={columns}

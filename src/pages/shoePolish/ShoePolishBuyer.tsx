@@ -1,33 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Cascader, Checkbox, Input, Modal, Progress, Space, Table, Tag } from 'antd'
-import { shoePolishApi, useCreateShoePolishMutation, useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi';
-import React, { useState } from 'react';
-import {
-
-  DatePicker,
-  Form,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TreeSelect,
-} from 'antd';
+import { Button, Form, Input, Modal, Progress, Select, Space, Table } from 'antd';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { toast } from 'sonner';
+import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi';
+import { shoePolishApi } from '../../redux/features/shoePolish/shoePolishApi';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 type FieldType = {
-  username?: string;
-  password?: string;
+  special_instructions?: string;
+  type_of_polish?: string;
   remember?: string;
+  level_of_shine:string
   name: string
 };
 const ShoePolishBuyer = () => {
   const dispatch = useAppDispatch()
-  const { email }  = useAppSelector(state => state?.auth?.user)|| {}
+  const { email } = useAppSelector(state => state?.auth?.user) || {}
   const { data: allSaleData, isLoading } = useGetAllSaleQuery(undefined)
   // console.log(allSaleData?.data,88);
-  const [saleId, setSaleId] = useState(null);
+  const [saleId, setSaleId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
@@ -35,7 +27,7 @@ const ShoePolishBuyer = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const data = allSaleData?.data?.filter(item => item?.buyer?.email == email);
+  const data:any = allSaleData?.data?.filter((item: { buyer: { email: string | undefined; }; }) => item?.buyer?.email == email)
 
 
   if (isLoading) {
@@ -62,11 +54,11 @@ const ShoePolishBuyer = () => {
   //   }
   // })
   // `${status?"Your Polish Is Pending":"Send Polish Request"}`
-  const showModal = (saleId) => {
+  const showModal = (saleId: string) => {
     setSaleId(saleId);
     setIsModalOpen(true);
   };
-  const handleOk = (data, saleId) => {
+  const handleOk = (data:any, saleId:string) => {
     setIsModalOpen(false);
     console.log(data, saleId, 77);
   };
@@ -80,30 +72,30 @@ const ShoePolishBuyer = () => {
   // }
 
 
-  const onFinish = async(fieldsValue: any) => {
+  const onFinish = async (fieldsValue: FieldType) => {
     const shoePolishdata = { ...fieldsValue, saleId }
     const { level_of_shine,
       type_of_polish, special_instructions } = shoePolishdata;
 
-    const modifiedshoePolishData = {level_of_shine,  saleId, type_of_polish}
+    const modifiedshoePolishData = { level_of_shine, saleId, type_of_polish }
 
     if (special_instructions) {
-      modifiedshoePolishData.special_instructions =special_instructions
-      }
+      modifiedshoePolishData.special_instructions = special_instructions 
+    }
 
-const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(modifiedshoePolishData)).unwrap()
+    const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(modifiedshoePolishData)).unwrap()
 
-   console.log(res);
+    console.log(res);
 
-if(res.success){
-  toast.success("Polish request send")
-}
+    if (res.success) {
+      toast.success("Polish request send")
+    }
 
     setIsModalOpen(false);
   };
 
 
-  const dataSource = data?.map(({ _id, polishId, saleId, shoeId, status,
+  const dataSource:any = data?.map(({ _id, polishId, saleId, shoeId, status,
     quantitySold, seller
     , estimated_completion_time, saleDate
   }) => ({
@@ -113,7 +105,7 @@ if(res.success){
     quantity: quantitySold,
     sellerName: seller?.name,
     saleDate: dayjs(saleDate).format("MM-DD-YYYY"),
-    polishRequest: polishId?.status =="in_progress"  || polishId?.status =="received" ? <Button color='green'>Polish in progress</Button> : <>
+    polishRequest: polishId?.status == "in_progress" || polishId?.status == "received" ? <Button color='green'>Polish in progress</Button> : <>
       <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(_id)}>
         Do Polish Request
       </Button>

@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Progress, Space, Table } from 'antd'
-import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useEffect, useState } from 'react'
+import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useAppSelector } from '../../redux/hooks'
-import dayjs from 'dayjs'
 
 const SalesHistory = () => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any[]>([])
 
   const { email } = useAppSelector(state => state?.auth.user) || {}
   console.log(data, 88);
@@ -23,8 +22,8 @@ const SalesHistory = () => {
       return;
     }
     // Use useEffect to update the state after the initial render
-    const unAuthorizedData = saleData && saleData?.data?.filter((item) => item?.unAuthorizedbuyerName);
-    const filteredData =saleData && saleData?.data?.filter((item) => item?.seller?.email === email);
+    const unAuthorizedData = saleData && saleData?.data?.filter((item: { unAuthorizedbuyerName: any }) => item?.unAuthorizedbuyerName);
+    const filteredData =saleData && saleData?.data?.filter((item: { seller: { email: string | undefined } }) => item?.seller?.email === email);
 
     // Merge the arrays using the spread operator
     const mergedData = [...filteredData, ...unAuthorizedData];
@@ -45,7 +44,7 @@ const SalesHistory = () => {
   // console.log(sateData.data);
 
   const dataSource = data?.map((item: any) => {
-    const { _id, shoeId, buyerName, quantitySold, unAuthorizedbuyerName, buyer, saleDate } = item
+    const { _id, shoeId,  quantitySold, unAuthorizedbuyerName, buyer, saleDate } = item
     console.log();
     const name = shoeId ? shoeId.name : null
     const img = shoeId ? shoeId.img : null

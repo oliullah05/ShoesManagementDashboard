@@ -1,11 +1,11 @@
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import { Button, Form, Input, Row, Col, Select } from 'antd'
+import { Button, Col, Form, Input, Row } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import { useLoginMutation } from '../redux/features/auth/authApi'
 import { TUser, setUser } from '../redux/features/auth/authSlice'
-import { decodeToken } from '../utils/verifyToken'
-import { toast } from 'sonner'
 import { useAppDispatch } from '../redux/hooks'
+import { decodeToken } from '../utils/verifyToken'
 
 const Login = () => {
   const navigate = useNavigate()

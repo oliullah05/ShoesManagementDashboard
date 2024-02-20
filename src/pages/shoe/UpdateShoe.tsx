@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import { useUpdateShoeMutation } from '../../redux/features/shoe/shoeApi'
 import { toast } from 'sonner'
-import { saleApi, useCreateSaleMutation } from '../../redux/features/sale/saleApi'
+import { saleApi } from '../../redux/features/sale/saleApi'
 import { useAppDispatch } from '../../redux/hooks'
 
 // const onFinishFailed = (errorInfo: any) => {

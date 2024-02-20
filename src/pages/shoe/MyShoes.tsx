@@ -94,7 +94,7 @@ const {email}=useAppSelector(state=>state.auth.user) || {}
   const { data:allShoeData, isLoading } = useGetAllShoesQuery(dynamicURL)
 
 // console.log(data.data[0].createdBy?.email);
-const data = allShoeData?.data?.filter(item=>item?.createdBy?.email==email)
+const data = allShoeData?.data?.filter((item: { createdBy: { email: string | undefined } })=>item?.createdBy?.email==email)
 console.log(data);
 
 

@@ -29,7 +29,7 @@ const getAllShoePolish = catchAsync(async (req, res) => {
 const getShoePolishByEmail= catchAsync(async (req, res) => {
     const {email} = req.params;
     console.log(email);
-    const result = await shoePolishPolishServices.getAllShoePolish(req.query,email)
+    const result = await shoePolishPolishServices.getAllShoePolish(req.query)
 
     sendResponse(res, {
         statusCode: 200,

@@ -8,12 +8,12 @@ import {
 import { Layout, Menu } from 'antd'
 import { NavLink, Outlet } from 'react-router-dom'
 import { logout } from '../../redux/features/auth/authSlice'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { useAppDispatch } from '../../redux/hooks'
 
 const { Header, Content, Sider } = Layout
 
 const MainLayout = () => {
-  const user = useAppSelector(state=>state?.auth) || {}
+  // const user = useAppSelector(state=>state?.auth) || {}
 
   const dispatch = useAppDispatch()
 
@@ -94,7 +94,7 @@ const MainLayout = () => {
 // }
 
 
-items.push( )
+// items.push( )
 
 
 

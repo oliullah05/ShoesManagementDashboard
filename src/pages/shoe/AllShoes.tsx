@@ -1,24 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CopyOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import {
   Avatar,
   Button,
   Card,
-  Checkbox,
   Col,
   Modal,
   Progress,
   Row,
   Space,
-  Tooltip,
+  Tooltip
 } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { toast } from 'sonner'
 import {
-  useDeleteShoeMutation,
-  useDeleteShoesManyMutation,
-  useGetAllShoesQuery,
+  useGetAllShoesQuery
 } from '../../redux/features/shoe/shoeApi'
 import UpdateShoe from './UpdateShoe'
 interface FormData {
@@ -35,7 +29,7 @@ interface FormData {
 const { Meta } = Card
 
 const AllShoes = () => {
-  const [selectedData, setSelectedData] = useState([] as string[])
+  // const [selectedData, setSelectedData] = useState([] as string[])
   const [dynamicURL, setDynamicURL] = useState('')
   const [formData, setFormData] = useState<FormData>({
     minPrice: '',
@@ -71,7 +65,7 @@ const AllShoes = () => {
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [deleteShoe] = useDeleteShoeMutation()
+  // const [deleteShoe] = useDeleteShoeMutation()
 
   const handleFilter = (e: any) => {
     const { name, value } = e.target

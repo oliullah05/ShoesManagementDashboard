@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input, Space } from 'antd';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -8,7 +9,7 @@ import { useAppDispatch } from '../../redux/hooks';
 const ProductVerification = () => {
   const [form] = Form.useForm();
 
-  const [productData, setProductData] = useState(null)
+  const [productData, setProductData] = useState<null|undefined>(null)
 
   // const [authenticityCode, setAuthenticityCode] = useState("SHOE-2024-7LMRRS")
   const dispatch = useAppDispatch()
@@ -28,7 +29,7 @@ const ProductVerification = () => {
 
   };
 
-  console.log(productData?.data?.color);
+  // console.log(productData?.data?.color);
 
   return (
     <>
@@ -71,7 +72,7 @@ const ProductVerification = () => {
 
         }
 
-{productData && <section className="text-gray-600 body-font overflow-hidden">
+{productData &&  <section className="text-gray-600 body-font overflow-hidden">
   <div className="container px-5 py-8 mx-auto">
     <div className="lg:w-4/5 mx-auto flex flex-wrap">
       <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={productData?.data?.img}/>

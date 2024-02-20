@@ -24,7 +24,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
           url: `/shoePolish`,
           method: 'GET',
         }),
-        providesTags: ['shoePolish',"shoePolishToSale"],
+        providesTags: ['shoePolish',"shoePolishToSale"] as unknown as undefined,
       }),
 
 
