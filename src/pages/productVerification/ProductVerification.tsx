@@ -4,12 +4,24 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { shoeApi } from '../../redux/features/shoe/shoeApi';
 import { useAppDispatch } from '../../redux/hooks';
-
+type ResponseType = {
+  data: {
+    img: string;
+    brand: string;
+    name: string;
+    review: number;
+    color:string,
+    sizes:[string],
+    description:string,
+    size:string,
+    price:string
+    // Add other properties based on the actual response structure
+  };}
 
 const ProductVerification = () => {
   const [form] = Form.useForm();
 
-  const [productData, setProductData] = useState<null|undefined>(null)
+  const [productData, setProductData] = useState<ResponseType | null | undefined>(null)
 
   // const [authenticityCode, setAuthenticityCode] = useState("SHOE-2024-7LMRRS")
   const dispatch = useAppDispatch()

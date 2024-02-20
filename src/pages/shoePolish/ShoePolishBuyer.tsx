@@ -77,7 +77,12 @@ const ShoePolishBuyer = () => {
     const { level_of_shine,
       type_of_polish, special_instructions } = shoePolishdata;
 
-    const modifiedshoePolishData = { level_of_shine, saleId, type_of_polish }
+      const modifiedshoePolishData: {
+        level_of_shine: string;
+        saleId: string | null;
+        type_of_polish: string | undefined;
+        special_instructions?: string;
+      } = { level_of_shine, saleId, type_of_polish };
 
     if (special_instructions) {
       modifiedshoePolishData.special_instructions = special_instructions 
@@ -95,9 +100,19 @@ const ShoePolishBuyer = () => {
   };
 
 
-  const dataSource:any = data?.map(({ _id, polishId, saleId, shoeId, status,
+  const dataSource:any = data?.map(({ _id, polishId,  shoeId,
     quantitySold, seller
-    , estimated_completion_time, saleDate
+    ,  saleDate
+  }:{
+    _id: string;
+    polishId?: { status: string; estimated_completion_time: string };
+    saleId: string;
+    shoeId: { img: string; name: string };
+    status: string;
+    quantitySold: number;
+    seller?: { name: string };
+    estimated_completion_time: string;
+    saleDate: string;
   }) => ({
     key: _id,
     image: <img src={shoeId?.img} alt={shoeId?.img} style={{ width: 50, height: 50 }} />,
