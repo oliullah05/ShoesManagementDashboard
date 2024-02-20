@@ -2,7 +2,7 @@ import { baseApi } from '../../api/baseApi'
 
 export const shoePolishApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    addShoePolish: builder.mutation({
+    createShoePolish: builder.mutation({
       query: (data) => ({
         url: '/shoePolish/create-shoe-polish',
         method: 'POST',
@@ -32,7 +32,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
 })
 
 export const {
-  useAddShoePolishMutation,
+  useCreateShoePolishMutation,
   useGetAllShoePolishQuery,
   useUpdateShoePolishMutation
 

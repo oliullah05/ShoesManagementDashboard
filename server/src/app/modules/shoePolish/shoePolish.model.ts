@@ -11,10 +11,10 @@ const TShoePolishSchema = new Schema<TShoePolish>(
       required: true,
      },
     level_of_shine: { type: String, enum: ["low", "medium", "high"], required: true},
-    special_instructions: { type: String, required: true },
+    special_instructions: { type: String },
     status: { type: String, enum: ["received", "in_progress", "complete"], required: true ,default:"received" },
     estimated_completion_time: { type: Date, required: true },
-    cost: { type: Number, required: true },
+    cost: { type: Number },
   },
   { timestamps: true } 
 );

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Cascader, Checkbox, Input, Modal, Progress, Space, Table, Tag } from 'antd'
-import { useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
-import { useAppSelector } from '../../redux/hooks';
+import { shoePolishApi, useCreateShoePolishMutation, useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi';
 import React, { useState } from 'react';
 import {
@@ -21,10 +21,11 @@ type FieldType = {
   name: string
 };
 const ShoePolishBuyer = () => {
+  const dispatch = useAppDispatch()
   const { email } = useAppSelector(state => state.auth.user)
   const { data: allSaleData, isLoading } = useGetAllSaleQuery(undefined)
   // console.log(allSaleData?.data,88);
-  const [selectedQuantitySold, setSelectedQuantitySold] = useState(null);
+  const [saleId, setSaleId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
@@ -59,8 +60,8 @@ const ShoePolishBuyer = () => {
   //   }
   // })
   // `${status?"Your Polish Is Pending":"Send Polish Request"}`
-  const showModal = (saleId, quantitySold) => {
-    setSelectedQuantitySold(quantitySold);
+  const showModal = (saleId) => {
+    setSaleId(saleId);
     setIsModalOpen(true);
   };
   const handleOk = (data, saleId) => {
@@ -77,8 +78,24 @@ const ShoePolishBuyer = () => {
   // }
 
 
-  const onFinish = (fieldsValue: any) => {
-    console.log('Received values of form: ', fieldsValue);
+  const onFinish = async(fieldsValue: any) => {
+    const shoePolishdata = { ...fieldsValue, saleId }
+    const { level_of_shine,
+      type_of_polish, special_instructions } = shoePolishdata;
+
+    const modifiedshoePolishData = {level_of_shine,  saleId, type_of_polish}
+
+    if (special_instructions) {
+      modifiedshoePolishData.special_instructions =special_instructions
+      }
+
+const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(modifiedshoePolishData)).unwrap()
+
+   console.log(res);
+
+
+
+    setIsModalOpen(false);
   };
 
 
@@ -93,7 +110,7 @@ const ShoePolishBuyer = () => {
     sellerName: seller.name,
     saleDate: saleDate,
     polishRequest: polishId ? <Button color='green'>Polish in progress</Button> : <>
-      <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(saleId, quantitySold)}>
+      <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(_id)}>
         Do Polish Request
       </Button>
       <Modal destroyOnClose okButtonProps={{ hidden: true }}
@@ -111,26 +128,26 @@ const ShoePolishBuyer = () => {
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-  
+
           <Form.Item<FieldType> label="Type Of Polish" name="type_of_polish"
-           rules={[{ required: true, message: 'Please select type of polish!' }]} >
-          <Select>
+            rules={[{ required: true, message: 'Please select type of polish!' }]} >
+            <Select>
               <Select.Option value="standard">Standard</Select.Option>
               <Select.Option value="medium">Medium</Select.Option>
               <Select.Option value="premium">Premium</Select.Option>
             </Select>
           </Form.Item>
 
-          <Form.Item<FieldType> label="Level Of Shine" name="level_of_shine" 
-           rules={[{ required: true, message: 'Please select level of shine!' }]} >
-          <Select>
+          <Form.Item<FieldType> label="Level Of Shine" name="level_of_shine"
+            rules={[{ required: true, message: 'Please select level of shine!' }]} >
+            <Select>
               <Select.Option value="low">Low</Select.Option>
               <Select.Option value="medium">Medium</Select.Option>
               <Select.Option value="high">High</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item<FieldType> label="Special Instructions" name={"special_instructions"}>
-          <Input.TextArea />
+            <Input.TextArea />
 
           </Form.Item>
 
