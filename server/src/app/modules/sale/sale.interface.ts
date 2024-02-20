@@ -5,7 +5,8 @@ export type TSale = {
   quantitySold: number
   buyer?: Types.ObjectId
   seller: Types.ObjectId
-  saleDate:string
+  saleDate:string,
+  unAuthorizedbuyerName?:string,
   price:number
   polishId:Types.ObjectId;
   totalAmount?: number

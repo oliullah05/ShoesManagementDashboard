@@ -30,6 +30,9 @@ const saleSchema = new Schema<TSale>({
     type: String,
     required: [true, 'Sale date is required'],
   },
+  unAuthorizedbuyerName: {
+    type: String,
+  },
   price: {
     type: Number,
     required: [true, 'Price is required'],

@@ -5,6 +5,7 @@ export const createSaleValidationSchema = z.object({
     shoeId: z.string(),
     quantitySold: z.number().positive('Quantity sold must be a positive number'),
     buyer: z.string().optional(),
+    unAuthorizedbuyerName:z.string().optional(),
     seller: z.string(),
     saleDate: z.string().min(1, 'Sale date is required'),
     price: z.number().min(0, 'Price must be a non-negative value'),
@@ -25,6 +26,7 @@ export const upadteSaleValidationSchema = z.object({
     isDelivered: z.boolean().optional().default(false),
     deliveryDate: z.date().optional(),
     notes: z.string().optional(),
+    unAuthorizedbuyerName:z.string().optional(),
   }).optional()
 })
 
