@@ -1,5 +1,5 @@
 import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import { Button, Form, Input, Row, Col } from 'antd'
+import { Button, Form, Input, Row, Col, Select } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLoginMutation } from '../redux/features/auth/authApi'
 import { TUser, setUser } from '../redux/features/auth/authSlice'
@@ -70,6 +70,15 @@ const Login = () => {
               type="password"
               placeholder="Password"
             />
+          </Form.Item>
+
+          <Form.Item label="Select Your Role" name="role"
+            rules={[{ required: true, message: 'Please selectyour role!' }]} >
+            <Select>
+              <Select.Option value="standard">Standard</Select.Option>
+              <Select.Option value="medium">Medium</Select.Option>
+              <Select.Option value="premium">Premium</Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item>
             <Button

@@ -24,7 +24,7 @@ type FieldType = {
 };
 const ShoePolishBuyer = () => {
   const dispatch = useAppDispatch()
-  const { email } = useAppSelector(state => state.auth.user)
+  const { email }  = useAppSelector(state => state?.auth?.user)|| {}
   const { data: allSaleData, isLoading } = useGetAllSaleQuery(undefined)
   // console.log(allSaleData?.data,88);
   const [saleId, setSaleId] = useState(null);

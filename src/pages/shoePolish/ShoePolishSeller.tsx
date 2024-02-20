@@ -3,9 +3,10 @@ import { DatePicker, DatePickerProps, Progress, Select, Space, Table, Tag } from
 import dayjs from 'dayjs'
 import { shoePolishApi, useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { toast } from 'sonner'
 
 const ShoePolishSeller = () => {
-const {email} = useAppSelector(state=>state.auth.user)
+const {email} = useAppSelector(state=>state.auth.user)|| {}
 
 
 
@@ -23,21 +24,6 @@ const dispatch = useAppDispatch()
     )
   }
 
-  // const dataSource = data?.data?.map((item: any) => {
-  //   const { _id ,saleId} = item
-
-
-  //   // const img = item.saleId.shoeId.img;
-
-  //   return {
-  //     key: _id,
-  //     // name,
-  //     image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
-  //     // quantity: quantitySold,
-  //     // buyerName,
-  //     // saleDate,
-  //   }
-  // })
   const onChangeDate: DatePickerProps['onChange'] =async (date, id) => {
     const updatedData = {
         data:{estimated_completion_time:date},
@@ -46,18 +32,20 @@ const dispatch = useAppDispatch()
     const res =await dispatch(shoePolishApi.endpoints.updateShoePolish.initiate( updatedData )).unwrap()
     console.log(res);
   };
-  const handleChangeSelect =async (value: string,id) => {
+  const handleChangeSelect =async (value: string,id:string) => {
     console.log(` ${value}`,id);
     const updatedData = {
         data:{status:value},
         id
     }
     const res =await dispatch(shoePolishApi.endpoints.updateShoePolish.initiate( updatedData )).unwrap()
-    
+    if(res.success){
+      toast.success("status update done")
+    }
   };
 
 
-  const dataSource = data.map(({_id, saleId,status,type_of_polish,level_of_shine,estimated_completion_time }) => ({
+  const dataSource = data?.map(({_id, saleId,status,type_of_polish,level_of_shine,estimated_completion_time }) => ({
     image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
     name:saleId.shoeId.name,
     quantity:saleId.
@@ -65,10 +53,10 @@ const dispatch = useAppDispatch()
     level_of_shine,
     typeOfPolish:type_of_polish,
     buyerName:saleId.buyer.name,
-    polishStatus:status,
+    polishStatus:<Tag className={`${status=="complete"?"bg-green-300":"bg-red-300"}`}>{status=="complete"?"complete":"not complete"}</Tag>,
     saleDate:dayjs(saleId.saleDate).format("MM-DD-YYYY"),
     polishRequest:status!=="complete"?<Select
-    className='border-red-700 border-2 rounded-lg'
+    className=' rounded-lg'
     defaultValue={`${status}`}
     style={{ width: 120 }}
     onChange={(data)=>handleChangeSelect(data,_id)}
@@ -80,7 +68,7 @@ const dispatch = useAppDispatch()
   />:<Tag className='bg-green-300'>this request completed</Tag>
 ,
 // `${estimated_completion_time?estimated_completion_time:"No pending polish requests"}`
-    estimated_completion_time: <DatePicker defaultValue={dayjs(estimated_completion_time)} onChange={(date,dateString)=>onChangeDate(dateString,_id)} />
+    estimated_completion_time: status!=="complete"? <DatePicker defaultValue={dayjs(estimated_completion_time)} onChange={(date,dateString)=>onChangeDate(dateString,_id)} />:<Tag className='bg-green-300'>this request completed</Tag>
   }));
 
   const columns = [

@@ -23,7 +23,7 @@ const userSchema = new Schema<TUSer>({
   },
   role: {
     type: String,
-    default: 'user',
+    required: [true, 'password is required'],
   },
   isDeleted: {
     type: Boolean,
