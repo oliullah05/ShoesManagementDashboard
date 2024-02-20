@@ -4,7 +4,7 @@ export type TSale = {
   shoeId: Types.ObjectId
   quantitySold: number
   buyer?: Types.ObjectId
-  seller: Types.ObjectId
+  seller?: Types.ObjectId
   saleDate:string,
   unAuthorizedbuyerName?:string,
   price:number

@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { useCreateSaleMutation } from '../../redux/features/sale/saleApi'
 import { useGetAllShoesQuery } from '../../redux/features/shoe/shoeApi'
+import { useAppSelector } from '../../redux/hooks'
 interface FormData {
   minPrice: string
   maxPrice: string
@@ -30,7 +31,8 @@ interface FormData {
 const { Meta } = Card
 
 const Sale = () => {
-
+const {email}= useAppSelector(state=>state.auth.user) || {}
+// console.log(email);
   const [dynamicURL, setDynamicURL] = useState('')
   const [formData, setFormData] = useState<FormData>({
     minPrice: '',
@@ -97,9 +99,9 @@ const Sale = () => {
         price: values.price,
         quantitySold: values.quantitySold,
         saleDate: values.saleDate,
-        seller: values.createdBy
+        unAuthorizedbuyerName:values.unAuthorizedbuyerName
       }
-
+    // console.log(shoeData,99999999999);
       const res = await createSale(shoeData)
 
 
@@ -125,7 +127,9 @@ const Sale = () => {
 
   const { data, isLoading } = useGetAllShoesQuery(dynamicURL)
 
+// console.log(data?.data[0]?.createdBy?.email,88);
 
+const filterData= data?.data?.filter(item=>item.createdBy?.email=="oli@oli.com")
 
   if (isLoading) {
     return (
@@ -135,7 +139,7 @@ const Sale = () => {
     )
   }
 
-  const filteredData = data?.data?.filter((item: any) => item.quantity > 0)
+  // const filteredData = data?.data?.filter((item: any) => item.quantity > 0)
 
   return (
     <>
@@ -215,7 +219,7 @@ const Sale = () => {
       </form>
 
       <Row gutter={[16, 16]}>
-        {filteredData?.map((item: any) => (
+        {filterData?.map((item: any) => (
           <Col xs={24} sm={12} md={8} lg={8} xl={8} key={item._id}>
             <Card
               style={{
@@ -244,7 +248,7 @@ const Sale = () => {
                   }}
                   key="sale"
                 >
-                  Buy
+                 Sell
                 </div>,
               ]}
             >
@@ -285,6 +289,9 @@ const Sale = () => {
           >
             <Input />
           </Form.Item> */}
+            <Form.Item label="Buyer Name" name="unAuthorizedbuyerName" >
+            <Input />
+          </Form.Item>
           <Form.Item
             label="Quantity"
             name="quantitySold"

@@ -11,7 +11,7 @@ const {email}= useAppSelector(state=>state?.auth.user)||{}
   const [period, setPeriod] = useState('')
   const { data:sateData, isLoading } = useGetAllSaleQuery(period)
 
-const data = sateData?.data?.filter(item=>item?.seller.email==email)
+const data = sateData?.data?.filter(item=>item?.seller?.email==email)
 
   if (isLoading) {
     return (
@@ -20,6 +20,8 @@ const data = sateData?.data?.filter(item=>item?.seller.email==email)
       </Space>
     )
   }
+
+// console.log(sateData.data);
 
   const dataSource = data?.map((item: any) => {
     const { _id, shoeId, buyerName, quantitySold, saleDate } = item

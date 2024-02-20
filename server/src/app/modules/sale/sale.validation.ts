@@ -6,7 +6,7 @@ export const createSaleValidationSchema = z.object({
     quantitySold: z.number().positive('Quantity sold must be a positive number'),
     buyer: z.string().optional(),
     unAuthorizedbuyerName:z.string().optional(),
-    seller: z.string(),
+    seller: z.string().optional(),
     saleDate: z.string().min(1, 'Sale date is required'),
     price: z.number().min(0, 'Price must be a non-negative value'),
     totalAmount: z.number().int().min(0, 'Total amount must be a non-negative integer').optional(),

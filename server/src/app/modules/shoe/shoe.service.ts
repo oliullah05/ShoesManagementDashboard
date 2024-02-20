@@ -38,7 +38,10 @@ const createShoe = async (payload: TShoe, currentUser: any) => {
 }
 
 const getAllShoes = async (query: Record<string, unknown>) => {
-  const shoeQuery = new QueryBuilder(Shoe.find(), query)
+  const shoeQuery = new QueryBuilder(Shoe.find().populate({
+    path:"createdBy",
+    select:"-password"
+  }), query)
     .search(['brand', 'model', 'name'])
     .filter()
     .sort()

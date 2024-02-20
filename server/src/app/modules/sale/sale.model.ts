@@ -23,7 +23,6 @@ const saleSchema = new Schema<TSale>({
   },
   seller: {
     type: Schema.Types.ObjectId,
-    required: [true, 'Seller name is required'],
     ref:"User"
   },
   saleDate: {

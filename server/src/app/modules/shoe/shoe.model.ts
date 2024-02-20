@@ -37,7 +37,8 @@ export const shoeSchema = new Schema<TShoe>(
       type:[String]
     },
     createdBy:{
-      type:Schema.Types.ObjectId
+      type:Schema.Types.ObjectId,
+      ref:"User"
     }
   },
   {

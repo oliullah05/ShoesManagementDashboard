@@ -13,16 +13,19 @@ if(!user){
 }
 
   const isShoeExits = await Shoe.findOne({ _id: payload.shoeId })
-  const isSellerExits = await User.findOne({ _id: payload.seller })
+  if(payload.seller){
+    const isSellerExits = await User.findOne({ _id: payload.seller })
+    if (!isSellerExits) {
+      throw new AppError(404, 'Seller not found')
+    }
+  }
 
   if (!isShoeExits) {
     throw new AppError(404, 'Shoe not found')
   }
 
 
-  if (!isSellerExits) {
-    throw new AppError(404, 'Seller not found')
-  }
+
 
   if (isShoeExits?.quantity < payload.quantitySold) {
     throw new AppError(
