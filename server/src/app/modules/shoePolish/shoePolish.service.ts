@@ -11,6 +11,23 @@ const sale =await Sale.findById(payload.saleId)
 if(!sale){
   throw new AppError(404,"sale not found")
 }
+
+if(!payload.estimated_completion_time){
+
+  const today = new Date();
+
+  // Calculate the date for 7 days from today
+  const sevenDaysLater = new Date(today);
+  sevenDaysLater.setDate(today.getDate() + 7);
+  
+  // Format the result (optional)
+  const formattedDate = sevenDaysLater.toISOString().split('T')[0];
+  
+  payload.estimated_completion_time=formattedDate
+}
+
+
+
   const result =await  ShoePolish.create(payload)
 if(!result){
   throw new AppError(404,"shoe not created")

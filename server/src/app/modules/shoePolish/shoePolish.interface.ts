@@ -6,6 +6,6 @@ export type TShoePolish = {
     level_of_shine: "low" | "medium" | "high",
     special_instructions?: string,
     status:  "received" |"in_progress" | "complete",
-    estimated_completion_time?:Date,
+    estimated_completion_time?:Date|string,
     cost?:number,
 }
