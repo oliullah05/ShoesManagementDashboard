@@ -2,10 +2,17 @@
 import { Button, Flex, Progress, Space, Table } from 'antd'
 import { useGetAllSaleQuery } from '../../redux/features/sale/saleApi'
 import { useState } from 'react'
+import { useAppSelector } from '../../redux/hooks'
 
 const SalesHistory = () => {
+const {email}= useAppSelector(state=>state?.auth.user)||{}
+
+
   const [period, setPeriod] = useState('')
-  const { data, isLoading } = useGetAllSaleQuery(period)
+  const { data:sateData, isLoading } = useGetAllSaleQuery(period)
+
+const data = sateData?.data?.filter(item=>item?.seller.email==email)
+
   if (isLoading) {
     return (
       <Space className="h-screen w-full flex justify-center items-center" wrap>
@@ -14,7 +21,7 @@ const SalesHistory = () => {
     )
   }
 
-  const dataSource = data?.data?.map((item: any) => {
+  const dataSource = data?.map((item: any) => {
     const { _id, shoeId, buyerName, quantitySold, saleDate } = item
 
     const name = shoeId ? shoeId.name : null
