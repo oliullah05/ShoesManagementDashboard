@@ -26,7 +26,7 @@ const ShoePolishBuyer = () => {
   // console.log(allSaleData?.data,88);
   const [selectedQuantitySold, setSelectedQuantitySold] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
+  // const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
 
   const handleCancel = () => {
@@ -62,20 +62,25 @@ const ShoePolishBuyer = () => {
   const showModal = (saleId, quantitySold) => {
     setSelectedQuantitySold(quantitySold);
     setIsModalOpen(true);
-    // console.log(saleId,77);
   };
   const handleOk = (data, saleId) => {
     setIsModalOpen(false);
     console.log(data, saleId, 77);
   };
-  const onFinishFormData = (_id, values) => {
-    console.log('Success:', { selectedQuantitySold }, {values});
-    // Perform further actions using _id, selectedQuantitySold, and values
-  };
+
+
+
+
   // const handleSale = (id) => {
   //   console.log("sdfd");
   //   console.log(id);
   // }
+
+
+  const onFinish = (fieldsValue: any) => {
+    console.log('Received values of form: ', fieldsValue);
+  };
+
 
   const dataSource = data?.map(({ _id, polishId, saleId, shoeId, status,
     quantitySold, seller
@@ -92,7 +97,9 @@ const ShoePolishBuyer = () => {
         Do Polish Request
       </Button>
       <Modal destroyOnClose okButtonProps={{ hidden: true }}
-        cancelButtonProps={{ hidden: true }} title="Basic Modal" open={isModalOpen} onOk={(data) => handleOk(data, _id)} onCancel={handleCancel}>
+        cancelButtonProps={{ hidden: true }} title="Basic Modal" open={isModalOpen}
+        onOk={(data) => handleOk(data, _id)}
+        onCancel={handleCancel}>
         {/*  */}
         <Form
           name="basic"
@@ -100,43 +107,35 @@ const ShoePolishBuyer = () => {
           wrapperCol={{ span: 16 }}
           style={{ maxWidth: 600 }}
           initialValues={{ remember: false }}
-          onFinish={(values) => onFinishFormData(quantitySold, values)}
-
+          onFinish={onFinish}
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
-          autoSave="off"
         >
-          <Form.Item<FieldType>
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-          >
-            <Input />
+  
+          <Form.Item<FieldType> label="Type Of Polish" name="type_of_polish"
+           rules={[{ required: true, message: 'Please select type of polish!' }]} >
+          <Select>
+              <Select.Option value="standard">Standard</Select.Option>
+              <Select.Option value="medium">Medium</Select.Option>
+              <Select.Option value="premium">Premium</Select.Option>
+            </Select>
           </Form.Item>
 
-          <Form.Item<FieldType>
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-          >
-            <Input.Password />
+          <Form.Item<FieldType> label="Level Of Shine" name="level_of_shine" 
+           rules={[{ required: true, message: 'Please select level of shine!' }]} >
+          <Select>
+              <Select.Option value="low">Low</Select.Option>
+              <Select.Option value="medium">Medium</Select.Option>
+              <Select.Option value="high">High</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item<FieldType> label="Special Instructions" name={"special_instructions"}>
+          <Input.TextArea />
+
           </Form.Item>
 
-          <Form.Item<FieldType>
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{ offset: 8, span: 16 }}
-          >
-            {/* <Checkbox>Remember me</Checkbox> */}
-          </Form.Item>
-          <Form.Item label="Select">
-        <Select>
-          <Select.Option value="demo">Demo</Select.Option>
-          <Select.Option value="demo02">Demo 2</Select.Option>
-        </Select>
-      </Form.Item>
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            {/* handleCancel */}
             <Button className='bg-[#1677ff]' type="primary" htmlType="submit">
               Submit
             </Button>
@@ -149,7 +148,24 @@ const ShoePolishBuyer = () => {
   }));
 
 
+  //   <Form.Item label="Type Of Polish" name="type_of_polish" required {...config}>
+  //   <Input />
+  // </Form.Item>
+  // <Form.Item label="Level Of Shine" name="level_of_shine" required {...config}>
+  //   <Input />
+  // </Form.Item>
+  // <Form.Item label="Select" required {...config}>
+  //   <Select>
+  //     <Select.Option value="demo">Demo</Select.Option>
+  //   </Select>
+  // </Form.Item>
 
+  // <Form.Item label="DatePicker">
+  //   <DatePicker />
+  // </Form.Item>
+  // <Form.Item label="InputNumber">
+  //   <InputNumber />
+  // </Form.Item>
 
 
 
