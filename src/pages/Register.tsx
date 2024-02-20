@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, Select } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useRegisterMutation } from '../redux/features/auth/authApi'
@@ -88,6 +88,13 @@ const Register = () => {
               type="password"
               placeholder="Password"
             />
+          </Form.Item>
+          <Form.Item  name="role"
+            rules={[{ required: true, message: 'Please select your role!' }]} >
+            <Select placeholder="Please Select Your Role!">
+              <Select.Option value="buyer">Buyer</Select.Option>
+              <Select.Option value="seller">Seller</Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item>
             <Button

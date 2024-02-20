@@ -72,14 +72,7 @@ const Login = () => {
             />
           </Form.Item>
 
-          <Form.Item label="Select Your Role" name="role"
-            rules={[{ required: true, message: 'Please selectyour role!' }]} >
-            <Select>
-              <Select.Option value="standard">Standard</Select.Option>
-              <Select.Option value="medium">Medium</Select.Option>
-              <Select.Option value="premium">Premium</Select.Option>
-            </Select>
-          </Form.Item>
+       
           <Form.Item>
             <Button
               type="primary"
