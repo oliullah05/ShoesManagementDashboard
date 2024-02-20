@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DatePicker, DatePickerProps, Progress, Select, Space, Table } from 'antd'
+import { DatePicker, DatePickerProps, Progress, Select, Space, Table, Tag } from 'antd'
 import dayjs from 'dayjs'
 import { shoePolishApi, useGetAllShoePolishQuery } from '../../redux/features/shoePolish/shoePolishApi'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
@@ -53,18 +53,22 @@ const dispatch = useAppDispatch()
         id
     }
     const res =await dispatch(shoePolishApi.endpoints.updateShoePolish.initiate( updatedData )).unwrap()
-    console.log(res);
+    
   };
 
 
-  const dataSource = data.map(({_id, saleId,status,estimated_completion_time }) => ({
+  const dataSource = data.map(({_id, saleId,status,type_of_polish,level_of_shine,estimated_completion_time }) => ({
     image: <img src={saleId.shoeId.img} alt={"name"} style={{ width: 50, height: 50 }} />,
     name:saleId.shoeId.name,
     quantity:saleId.
     quantitySold,
+    level_of_shine,
+    typeOfPolish:type_of_polish,
     buyerName:saleId.buyer.name,
+    polishStatus:status,
     saleDate:dayjs(saleId.saleDate).format("MM-DD-YYYY"),
-    polishRequest:<Select
+    polishRequest:status!=="complete"?<Select
+    className='border-red-700 border-2 rounded-lg'
     defaultValue={`${status}`}
     style={{ width: 120 }}
     onChange={(data)=>handleChangeSelect(data,_id)}
@@ -73,7 +77,7 @@ const dispatch = useAppDispatch()
       { value: 'in_progress', label: 'in_progress' },
       { value: 'received', label: 'received' },
     ]}
-  />
+  />:<Tag className='bg-green-300'>this request completed</Tag>
 ,
 // `${estimated_completion_time?estimated_completion_time:"No pending polish requests"}`
     estimated_completion_time: <DatePicker defaultValue={dayjs(estimated_completion_time)} onChange={(date,dateString)=>onChangeDate(dateString,_id)} />
@@ -99,6 +103,21 @@ const dispatch = useAppDispatch()
       title: 'Buyer Name',
       dataIndex: 'buyerName',
       key: 'buyerName',
+    },
+    {
+      title: 'Polish Status',
+      dataIndex: 'polishStatus',
+      key: 'polishStatus',
+    },
+    {
+      title: 'Type Of Polish',
+      dataIndex: 'typeOfPolish',
+      key: 'typeOfPolish',
+    },
+    {
+      title: 'Level Of Shine',
+      dataIndex: 'level_of_shine',
+      key: 'level_of_shine',
     },
     {
       title: 'Sale Date',

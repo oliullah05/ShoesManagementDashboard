@@ -15,6 +15,7 @@ import {
   TreeSelect,
 } from 'antd';
 import dayjs from 'dayjs';
+import { toast } from 'sonner';
 type FieldType = {
   username?: string;
   password?: string;
@@ -94,7 +95,9 @@ const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(mod
 
    console.log(res);
 
-
+if(res.success){
+  toast.success("Polish request send")
+}
 
     setIsModalOpen(false);
   };
@@ -110,7 +113,7 @@ const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(mod
     quantity: quantitySold,
     sellerName: seller.name,
     saleDate: dayjs(saleDate).format("MM-DD-YYYY"),
-    polishRequest: polishId ? <Button color='green'>Polish in progress</Button> : <>
+    polishRequest: polishId?.status =="in_progress"  || polishId?.status =="received" ? <Button color='green'>Polish in progress</Button> : <>
       <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(_id)}>
         Do Polish Request
       </Button>
