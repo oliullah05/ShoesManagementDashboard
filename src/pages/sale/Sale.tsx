@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { useCreateSaleMutation } from '../../redux/features/sale/saleApi'
 import { useGetAllShoesQuery } from '../../redux/features/shoe/shoeApi'
+import { useAppSelector } from '../../redux/hooks'
 interface FormData {
   minPrice: string
   maxPrice: string
@@ -30,7 +31,7 @@ interface FormData {
 const { Meta } = Card
 
 const Sale = () => {
-// const {email}= useAppSelector(state=>state.auth.user) || {}
+const {email}= useAppSelector(state=>state.auth.user) || {}
 // console.log(email);
   const [dynamicURL, setDynamicURL] = useState('')
   const [formData, setFormData] = useState<FormData>({
@@ -128,7 +129,7 @@ const Sale = () => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-const filterData= data?.data?.filter((item: { createdBy: { email: string } })=>item.createdBy?.email=="oli@oli.com")
+const filterData= data?.data?.filter((item: { createdBy: { email: string } })=>item.createdBy?.email==email)
 
   if (isLoading) {
     return (
