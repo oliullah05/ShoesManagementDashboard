@@ -48,6 +48,11 @@ const MainLayout = () => {
       label: <NavLink to={'/sales-history'}>Sales History</NavLink>,
     },
     {
+      key: 'Buys History',
+      icon: <HistoryOutlined />,
+      label: <NavLink to={'/buys-history'}>Buys History</NavLink>,
+    },
+    {
       key: 'Product Verification',
       icon: <HistoryOutlined />,
       label: <NavLink to={'/product-verification'}>Product Verification</NavLink>,

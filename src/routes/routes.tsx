@@ -11,7 +11,7 @@ import DuplicateAndEdit from '../pages/shoe/DuplicateAndEdit'
 import ProtectedRoute from './ProtectedRoute'
 import ShoePolishBuyer from '../pages/shoePolish/ShoePolishBuyer'
 import ShoePolishSeller from '../pages/shoePolish/ShoePolishSeller'
-
+import BuysHistory from "../pages/buysHistory/BuysHistory.jsx"
 // const token  = localStorage.getItem("persist:auth")
 // const role = JSON.parse(JSON.parse(token)?.user)?.role;
 const router = createBrowserRouter([
@@ -45,6 +45,14 @@ const router = createBrowserRouter([
         path: 'sales-history',
         element: <SalesHistory></SalesHistory>,
       },
+      {
+        path: 'buys-history',
+        element: <BuysHistory></BuysHistory>,
+      },
+      // {
+      //   path: 'buys-history',
+      //   element: <BuysHis
+      // },
       {
         path: 'product-verification',
         element: <ProductVerification></ProductVerification>,
