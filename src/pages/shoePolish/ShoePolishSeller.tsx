@@ -63,7 +63,7 @@ const dispatch = useAppDispatch()
     quantity:saleId.
     quantitySold,
     buyerName:saleId.buyer.name,
-    saleDate:saleId.saleDate,
+    saleDate:dayjs(saleId.saleDate).format("MM-DD-YYYY"),
     polishRequest:<Select
     defaultValue={`${status}`}
     style={{ width: 120 }}

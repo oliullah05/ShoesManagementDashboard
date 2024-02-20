@@ -14,6 +14,7 @@ import {
   Switch,
   TreeSelect,
 } from 'antd';
+import dayjs from 'dayjs';
 type FieldType = {
   username?: string;
   password?: string;
@@ -108,7 +109,7 @@ const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(mod
     name: shoeId.name,
     quantity: quantitySold,
     sellerName: seller.name,
-    saleDate: saleDate,
+    saleDate: dayjs(saleDate).format("MM-DD-YYYY"),
     polishRequest: polishId ? <Button color='green'>Polish in progress</Button> : <>
       <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(_id)}>
         Do Polish Request
@@ -161,7 +162,7 @@ const res = await dispatch(shoePolishApi.endpoints.createShoePolish.initiate(mod
         {/*  */}
       </Modal></>,
     polishStatus: `${polishId ? polishId.status : "No pending polish requests"}`,
-    estimated_completion_time: `${polishId ? polishId.estimated_completion_time : "No pending polish requests"}`
+    estimated_completion_time: `${polishId ? dayjs(polishId.estimated_completion_time).format("MM-DD-YYYY") : "No pending polish requests"}`
   }));
 
 
