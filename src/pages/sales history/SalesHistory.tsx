@@ -8,10 +8,13 @@ const SalesHistory = () => {
 const {email}= useAppSelector(state=>state?.auth.user)||{}
 
 
-  const [period, setPeriod] = useState('')
-  const { data:sateData, isLoading } = useGetAllSaleQuery(period)
 
-const data = sateData?.data?.filter(item=>item?.seller?.email==email)
+  const [period, setPeriod] = useState('')
+  const { data:saleData, isLoading } = useGetAllSaleQuery(period)
+console.log(saleData?.data[0].seller);
+
+
+const data = saleData?.data?.filter(item=>item?.seller?.email==email)
 
   if (isLoading) {
     return (

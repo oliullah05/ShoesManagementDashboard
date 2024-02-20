@@ -11,7 +11,7 @@ const BuysHistory = () => {
   const [period, setPeriod] = useState('')
   const { data: sateData, isLoading } = useGetAllSaleQuery(period)
 
-  const data = sateData?.data?.filter(item => item?.buyer.email == email)
+  const data = sateData?.data?.filter(item => item?.buyer?.email == email)
 
   if (isLoading) {
     return (
@@ -23,10 +23,10 @@ const BuysHistory = () => {
 
   const dataSource = data?.map((item: any) => {
     const { _id, shoeId, buyerName, seller, quantitySold, saleDate } = item
-    console.log(seller.name, 77);
+    console.log(seller?.name, 77);
     const name = shoeId ? shoeId.name : null
     const img = shoeId ? shoeId.img : null
-  const sellerName = seller.name?seller.name : item.unAuthorizedbuyerName;
+  const sellerName = seller?.name?seller?.name : item?.unAuthorizedbuyerName;
     return {
       key: _id,
       name,
