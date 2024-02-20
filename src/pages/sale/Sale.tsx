@@ -125,7 +125,6 @@ const Sale = () => {
 
   const { data, isLoading } = useGetAllShoesQuery(dynamicURL)
 
-console.log(data?.data,77);
 
 
   if (isLoading) {
