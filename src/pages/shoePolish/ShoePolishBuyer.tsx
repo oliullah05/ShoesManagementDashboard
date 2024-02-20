@@ -18,12 +18,13 @@ type FieldType = {
   username?: string;
   password?: string;
   remember?: string;
-  name:string
+  name: string
 };
 const ShoePolishBuyer = () => {
-  const {email} = useAppSelector(state=>state.auth.user)
+  const { email } = useAppSelector(state => state.auth.user)
   const { data: allSaleData, isLoading } = useGetAllSaleQuery(undefined)
   // console.log(allSaleData?.data,88);
+  const [selectedQuantitySold, setSelectedQuantitySold] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
@@ -58,86 +59,91 @@ const ShoePolishBuyer = () => {
   //   }
   // })
   // `${status?"Your Polish Is Pending":"Send Polish Request"}`
-  const showModal = (saleId) => {
+  const showModal = (saleId, quantitySold) => {
+    setSelectedQuantitySold(quantitySold);
     setIsModalOpen(true);
     // console.log(saleId,77);
   };
-  const handleOk = (saleId) => {
+  const handleOk = (data, saleId) => {
     setIsModalOpen(false);
-    console.log(saleId);
+    console.log(data, saleId, 77);
   };
-
-  const onFinishFormData = (values: any,id) => {
-    console.log('Success:', values,id);
+  const onFinishFormData = (_id, values) => {
+    console.log('Success:', { selectedQuantitySold }, {values});
+    // Perform further actions using _id, selectedQuantitySold, and values
   };
-  
-const handleSale= (id)=>{
-  console.log("sdfd");
-  console.log(id);
-}
+  // const handleSale = (id) => {
+  //   console.log("sdfd");
+  //   console.log(id);
+  // }
 
-  const dataSource = data?.map(({_id,polishId, saleId,shoeId,status,
-    quantitySold,seller
-,     estimated_completion_time,saleDate
-}) => ({
-    key:saleId?._id,
+  const dataSource = data?.map(({ _id, polishId, saleId, shoeId, status,
+    quantitySold, seller
+    , estimated_completion_time, saleDate
+  }) => ({
+    key: _id,
     image: <img src={shoeId?.img} alt={shoeId?.img} style={{ width: 50, height: 50 }} />,
     name: shoeId.name,
-    quantity:quantitySold,
+    quantity: quantitySold,
     sellerName: seller.name,
-    saleDate:saleDate,
-    polishRequest:polishId ?<Button  color='green'>Polish in progress</Button>:<>
-    <Button className='bg-[#1677ff]' type="primary" onClick={showModal}>
-      Do Polish Request
-    </Button>
-    <Modal  destroyOnClose  okButtonProps={{ hidden: true }}
-        cancelButtonProps={{ hidden: true }} title="Basic Modal" open={isModalOpen} onOk={()=>handleOk(_id)} onCancel={handleCancel}>
-      {/*  */}
-      <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    initialValues={{ remember: false }}
-   
-    onFinish={(data)=>onFinishFormData(data,_id)}
-    // onFinishFailed={onFinishFailed}
-    autoComplete="off"
-
-  >
-    <Form.Item<FieldType>
-      label="Username"
-      name="username"
-      rules={[{ required: true, message: 'Please input your username!' }]}
-    >
-      <Input />
-    </Form.Item>
-
-    <Form.Item<FieldType>
-      label="Password"
-      name="password"
-      rules={[{ required: true, message: 'Please input your password!' }]}
-    >
-      <Input.Password />
-    </Form.Item>
-
-    <Form.Item<FieldType>
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{ offset: 8, span: 16 }}
-    >
-      {/* <Checkbox>Remember me</Checkbox> */}
-    </Form.Item>
-
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-    {/* handleCancel */}
-      <Button className='bg-[#1677ff]' onClick={()=>handleSale(_id)}  type="primary" htmlType="submit">
-        Submit
+    saleDate: saleDate,
+    polishRequest: polishId ? <Button color='green'>Polish in progress</Button> : <>
+      <Button className='bg-[#1677ff]' type="primary" onClick={() => showModal(saleId, quantitySold)}>
+        Do Polish Request
       </Button>
-    </Form.Item>
-  </Form>
-      {/*  */}
-    </Modal></>,
+      <Modal destroyOnClose okButtonProps={{ hidden: true }}
+        cancelButtonProps={{ hidden: true }} title="Basic Modal" open={isModalOpen} onOk={(data) => handleOk(data, _id)} onCancel={handleCancel}>
+        {/*  */}
+        <Form
+          name="basic"
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ maxWidth: 600 }}
+          initialValues={{ remember: false }}
+          onFinish={(values) => onFinishFormData(quantitySold, values)}
+
+          // onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          autoSave="off"
+        >
+          <Form.Item<FieldType>
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item<FieldType>
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: 'Please input your password!' }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item<FieldType>
+            name="remember"
+            valuePropName="checked"
+            wrapperCol={{ offset: 8, span: 16 }}
+          >
+            {/* <Checkbox>Remember me</Checkbox> */}
+          </Form.Item>
+          <Form.Item label="Select">
+        <Select>
+          <Select.Option value="demo">Demo</Select.Option>
+          <Select.Option value="demo02">Demo 2</Select.Option>
+        </Select>
+      </Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            {/* handleCancel */}
+            <Button className='bg-[#1677ff]' type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+        {/*  */}
+      </Modal></>,
     polishStatus: `${polishId ? polishId.status : "No pending polish requests"}`,
     estimated_completion_time: `${polishId ? polishId.estimated_completion_time : "No pending polish requests"}`
   }));
@@ -246,7 +252,7 @@ const handleSale= (id)=>{
         columns={columns}
         dataSource={dataSource}
       />
- {/* <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      {/* <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <input />
           </Modal> */}
     </div>
