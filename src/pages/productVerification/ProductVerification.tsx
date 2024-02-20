@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { shoeApi } from '../../redux/features/shoe/shoeApi';
 import { useAppDispatch } from '../../redux/hooks';
-import Rating from 'react-rating';
 
 
 const ProductVerification = () => {

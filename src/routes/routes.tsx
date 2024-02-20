@@ -47,15 +47,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'product-verification',
-        element:<ProtectedRoute role='buyer'> <ProductVerification></ProductVerification></ProtectedRoute>,
+        element: <ProductVerification></ProductVerification>,
       },
       {
-        path: 'polish-request',
-        element: <ShoePolishBuyer></ShoePolishBuyer>,
+        path: 'polish-request-buyer',
+        element: <ProtectedRoute role='buyer'><ShoePolishBuyer></ShoePolishBuyer></ProtectedRoute>,
       },
       {
         path: 'polish-request-seller',
-        element: <ShoePolishSeller></ShoePolishSeller>,
+        element:<ProtectedRoute role='seller'> <ShoePolishSeller></ShoePolishSeller></ProtectedRoute>,
       },
     ],
   },

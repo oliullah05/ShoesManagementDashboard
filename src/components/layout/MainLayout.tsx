@@ -8,11 +8,13 @@ import {
 import { Layout, Menu } from 'antd'
 import { NavLink, Outlet } from 'react-router-dom'
 import { logout } from '../../redux/features/auth/authSlice'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 
 const { Header, Content, Sider } = Layout
 
 const MainLayout = () => {
+  const user = useAppSelector(state=>state?.auth) || {}
+
   const dispatch = useAppDispatch()
 
   const handleLogout = () => {
@@ -50,23 +52,39 @@ const MainLayout = () => {
       icon: <HistoryOutlined />,
       label: <NavLink to={'/product-verification'}>Product Verification</NavLink>,
     },
-    {
-      key: 'Polish Request',
-      icon: <HistoryOutlined />,
-      label: <NavLink to={'/polish-request'}>Polish Request buyer</NavLink>,
-    },
-    {
-      key: 'Polish Request Seller',
-      icon: <HistoryOutlined />,
-      label: <NavLink to={'/polish-request-seller'}>Polish Request Seller</NavLink>,
-    },
 
-    {
-      key: 'Logout',
-      icon: <LogoutOutlined />,
-      label: <span onClick={handleLogout}>Logout</span>,
-    },
   ]
+
+
+if(user?.user?.role=="buyer"){
+items.push(   {
+  key: 'Polish Request-buyer',
+  icon: <HistoryOutlined />,
+  label: <NavLink to={'/polish-request-buyer'}>Polish Request</NavLink>,
+},)
+}
+
+if(user?.user?.role=="seller"){
+items.push(
+  {
+  key: 'Polish Request',
+  icon: <HistoryOutlined />,
+  label: <NavLink to={'/polish-request-seller'}>Polish Request </NavLink>,
+},
+
+
+
+)
+}
+
+
+items.push( {
+  key: 'Logout',
+  icon: <LogoutOutlined />,
+  label: <span onClick={handleLogout}>Logout</span>,
+})
+
+
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
