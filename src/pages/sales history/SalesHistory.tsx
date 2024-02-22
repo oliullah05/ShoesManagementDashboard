@@ -7,14 +7,15 @@ import { useAppSelector } from '../../redux/hooks'
 const SalesHistory = () => {
   const [data, setData] = useState<any[]>([])
 
-  const { email } = useAppSelector(state => state?.auth.user) || {}
-  console.log(data, 88);
+  const { email } = useAppSelector(state => state?.auth?.user) || {}
+  // console.log(data, 88);
   // const [data,setData]=useState([])
 
   const [period, setPeriod] = useState('')
+ 
   const { data: saleData, isLoading } = useGetAllSaleQuery(period)
   // console.log(saleData?.data[6].unAuthorizedbuyerName);
-
+// console.log(saleData.data);
   useEffect(() => {
     if (!saleData || !saleData.data) {
       // Handle the case where saleData or saleData.data is undefined

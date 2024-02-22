@@ -8,15 +8,15 @@ export const saleApi = baseApi.injectEndpoints({
         method: 'POST',
         body: saleInfo,
       }),
-      invalidatesTags: ['saleToShoe'],
+      invalidatesTags: ['saleToShoe',"polish"],
     }),
 
     getAllSale: builder.query({
-      query: () => ({
-        url: `/sale`,
+      query: (period) => ({
+        url: `/sale${period ? `/${period}` : ''}`,
         method: 'GET',
       }),
-      providesTags: ['saleToShoe'] 
+      providesTags: ['saleToShoe',"polish"],
     }),
   }),
 })

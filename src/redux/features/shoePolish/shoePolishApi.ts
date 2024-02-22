@@ -8,7 +8,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['shoePolish',"shoePolishToSale"] as unknown as undefined,
+      invalidatesTags: ['shoePolish',"shoePolishToSale","polish"] as unknown as undefined,
     }),
     updateShoePolish: builder.mutation({
       query: (data) => ({
@@ -16,7 +16,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data.data,
       }),
-      invalidatesTags: ['shoePolish'] as unknown as undefined,
+      invalidatesTags: ['shoePolish',"polish"] as unknown as undefined,
     }),
 
     getAllShoePolish: builder.query({
@@ -24,7 +24,7 @@ export const shoePolishApi = baseApi.injectEndpoints({
           url: `/shoePolish`,
           method: 'GET',
         }),
-        providesTags: ['shoePolish',"shoePolishToSale"] as unknown as undefined,
+        providesTags: ['shoePolish',"shoePolishToSale","polish"] as unknown as undefined,
       }),
 
 
